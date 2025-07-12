@@ -1,81 +1,104 @@
-# Threepics Dashboard
+# Threepics Dashboard 📸
 
-This project is a full-stack photo uploader application
+A digital photo frame project – built as a full-stack web application.  
+**Automatically installable via Debian package**.  
+Tested on Raspberry Pi OS (Raspberry Pi OS Bookworm / Debian 12).
 
-## Project Structure
+## ✨ Features
 
-- `backend/`: Contains the backend server code (Node.js/Express).
-- `frontend/`: Contains the frontend client code (React + Vite).
-- `node_modules/`: Installed npm packages.
-- `package.json`: NPM dependencies and scripts.
-- `pnpm-lock.yaml`: Lock file for package versions.
-- `requirements.txt`: (Empty or for future use)
+- Multiple Subaccounts — Ideal for family members to manage their own uploads
+- Media Upload — Upload images and videos (optionally with subtitles) via web portal or Telegram bot
+- Smooth Transition Effects — Various animations between slides
+- Configurable Settings — Adjust delay, transition duration, language, and more
+- Language Support — German 🇩🇪 and English 🇬🇧
+- Touch Navigation — Tap the screen to skip to the next image
+- Explore all features on three-pics.com
 
-## Prerequisites
+## 🛠️ Currently in Development
 
-- Node.js (v18 or newer recommended)
-- pnpm package manager
-- Python 3 (optional, if backend uses Python)
+- Custom 3D-printed frames for touchscreen devices
+---
 
-## Installation
+## 📦 Installation via Debian Package
 
-1. Clone the repository:
+The latest `.deb` package is available on GitHub Releases:
 
-```bash
-git clone <repository-url>
-cd threepics-dashboard
-```
+👉 [Download threepics-dashboard_v1.0.0.deb](https://github.com/bc-bjoern/threepics-dashboard/releases/tag/v1.0.0)
 
-2. Install backend dependencies:
+### ✅ Requirements
 
-```bash
-cd backend
-pnpm install
-```
+This has been tested on:
 
-3. Install frontend dependencies:
+- Raspberry Pi OS (Bookworm)
+- Debian 12
+- A touchscreen connected to the device
 
-```bash
-cd ../frontend
-pnpm install
-```
+### 🛠 Installation Steps
 
-## Running the Project
-
-### Backend
+1. Download the `.deb` package:
 
 ```bash
-cd backend
-pnpm start
+wget https://github.com/bc-bjoern/threepics-dashboard/releases/download/v1.0.0/threepics-dashboard_1.0.0.deb
 ```
 
-or if using node directly:
+2. Install the package:
 
 ```bash
-node server.js
+sudo dpkg -i threepics-dashboard_1.0.0.deb
 ```
 
-### Frontend
+3. (Optional) Fix missing dependencies:
 
 ```bash
-cd frontend
-pnpm dev
+sudo apt-get install -f
 ```
 
-## Notes
-
-- Ensure you have the necessary environment variables configured if required.
-- The backend server handles photo uploads.
-- The frontend is built with React and Vite for development and hot reloading.
-
-## Troubleshooting
-
-- If you get missing package errors, run `pnpm install` again in the respective directories.
-- Make sure Node.js and pnpm are correctly installed.
+4. Reboot the device:
 
 ```bash
-ssh -L 9000:localhost:38329 -L 3000:localhost:3000 -L 8081:localhost:8081 <user>@threepics-dashboard
+sudo reboot
 ```
+
+---
+
+## 🖥 Usage
+
+After reboot:
+
+- The application launches automatically on the connected screen.
+- In the upper middle of the screen, tap to open the **Setup** panel.
+- Under the **Login tab**, enter your email and password from [three-pics.com](https://three-pics.com).
+
+You need a valid account on three-pics.com to use this dashboard.
+
+---
+
+## 🔧 Developer Structure
+
+For developers working with the source:
+
+```
+.
+├── backend/        # Node.js/Express API server
+├── frontend/       # React + Vite single-page application
+├── setup/          # DEBIAN package build structure
+├── scripts/        # Python sync utilities
+└── config/         # JSON-based local credentials + settings
+```
+
+---
+
+## ⚠️ Status: Alpha
+
+This project is still under heavy development and testing.  
+**Please do not use yet.**
+
+---
+
+## 💬 Contact
+
+Developed by **Björn Becker**  
+GitHub: [bc-bjoern](https://github.com/bc-bjoern)
 
 ---
 
