@@ -1,6 +1,15 @@
 import React from 'react';
+import useDevice from '../hooks/useDevice';
 
 export default function MediaFooter({ subtitle, type }) {
+  const device = useDevice();
+
+  {device && (
+    <div style={{ fontSize: '0.8rem', color: '#ccc' }}>
+      Device-ID: {device.device_id} – Hostname: {device.hostname}
+    </div>
+  )}
+
   if (!(type === 'image' || type === 'video')) return null;
 
   return (

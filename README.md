@@ -29,7 +29,7 @@ The latest `.deb` package is available on GitHub Releases:
 
 This has been tested on:
 
-- Raspberry Pi OS (Bookworm)
+- Raspberry Pi OS Lite (Bookworm)
 - Debian 12
 - A touchscreen connected to the device
 
@@ -38,7 +38,7 @@ This has been tested on:
 1. Download the `.deb` package:
 
 ```bash
-wget https://github.com/bc-bjoern/threepics-dashboard/releases/download/v1.0.0/threepics-dashboard_1.0.0.deb
+wget https://github.com/bc-bjoern/threepics-dashboard/releases/download/v1.0.0/threepics-dashboard_v1.0.0.deb
 ```
 
 2. Install the package:
@@ -85,6 +85,21 @@ For developers working with the source:
 ├── scripts/        # Python sync utilities
 └── config/         # JSON-based local credentials + settings
 ```
+
+## Troubleshooting
+
+- If you get missing package errors, run pnpm install again in the respective directories.
+- Make sure Node.js and pnpm are correctly installed.
+
+## Developer hint 
+
+SSH Tunnel for the win
+
+``` bash
+ssh -L 9000:localhost:38329 -L 3000:localhost:3000 -L 8081:localhost:8081 <user>@threepics-dashboard
+```
+
+open localhost:9000
 
 ---
 

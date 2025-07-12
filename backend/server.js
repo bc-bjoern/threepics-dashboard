@@ -27,8 +27,22 @@ import credentialsRouter from './routes/credentials.js';
 import messagesRouter from './routes/messages.js';
 import systemRouter from './routes/system.js';
 import setupRouter from './routes/setup.js';
-import { startWatcher } from './watchers/watch-downloads.js';
+import deviceRouter from './routes/device.js';
 
+import { startWatcher } from './watchers/watch-downloads.js';
+import os from 'os';
+import crypto from 'crypto';
+
+const devicePath = path.join(__dirname, 'config', 'device.json');
+if (!fs.existsSync(devicePath)) {
+  const deviceData = {
+    device_id: crypto.randomUUID?.() || String(Date.now()) + Math.random(),
+    hostname: os.hostname(),
+    created_at: new Date().toISOString()
+  };
+  fs.writeFileSync(devicePath, JSON.stringify(deviceData, null, 2), 'utf8');
+  console.log('🆕 Generated device.json');
+}
 
 const downloadsPath = path.resolve(__dirname, 'downloads');
 startWatcher(downloadsPath);
@@ -40,6 +54,7 @@ app.use(cors());
 app.use(express.json());
 
 // router 
+app.use('/api/device', deviceRouter);
 app.use('/media', mediaRouter);
 app.use('/api', wifiRouter);
 app.use('/api', credentialsRouter);

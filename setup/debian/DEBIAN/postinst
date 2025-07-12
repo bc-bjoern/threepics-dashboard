@@ -201,6 +201,8 @@ alias logs-backend='sudo /bin/journalctl -u threepics-backend.service -n 50 --no
 alias logs-frontend='sudo /bin/journalctl -u threepics-frontend.service -n 50 --no-pager'
 alias logs-follow-backend='sudo /bin/journalctl -u threepics-backend.service -f'
 alias logs-follow-frontend='sudo /bin/journalctl -u threepics-frontend.service -f'
+
+cd /opt/threepics/threepics-dashboard/
 EOF
 chown threepics:threepics "$BASHRC"
 

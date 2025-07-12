@@ -6,6 +6,7 @@ const configPath = path.resolve('config/credentials.json');
 const venvPython = path.resolve('.venv/bin/python3');
 const getAllScript = path.resolve('scripts/get_all.py');
 const getSetupScript = path.resolve('scripts/get_setup.py');
+const registerDeviceScript = path.resolve('scripts/register_device.py');
 const restartCmd = 'sudo /bin/systemctl restart threepics-backend.service';
 
 console.log('👀 Watching:', configPath);
@@ -24,11 +25,16 @@ fs.watch(configPath, { persistent: true }, (eventType) => {
         if (stderr2) console.warn('⚠️ get_setup.py stderr:', stderr2);
         console.log('✅ get_setup.py output:', stdout2);
       });
-        exec(restartCmd, (err3, stdout3, stderr3) => {
-          if (err3) return console.error('❌ Restart failed:', err3.message);
-          if (stderr3) console.warn('⚠️ Restart stderr:', stderr3);
-          console.log('🔄 Backend restarted successfully.');
-        });
+        exec(`${venvPython} ${registerDeviceScript}`, (err3, stdout3, stderr3) => {
+          if (err3) return console.error('❌ register_device.py failed:', err3.message);
+          if (stderr3) console.warn('⚠️ register_device.py stderr:', stderr3);
+          console.log('✅ register_device.py output:', stdout3);
+          });
+          exec(restartCmd, (err3, stdout3, stderr3) => {
+            if (err3) return console.error('❌ Restart failed:', err3.message);
+            if (stderr3) console.warn('⚠️ Restart stderr:', stderr3);
+            console.log('🔄 Backend restarted successfully.');
+          });
     });
   }
 });
