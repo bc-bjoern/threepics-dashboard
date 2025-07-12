@@ -24,18 +24,19 @@ fs.watch(configPath, { persistent: true }, (eventType) => {
         if (err2) return console.error('❌ get_setup.py failed:', err2.message);
         if (stderr2) console.warn('⚠️ get_setup.py stderr:', stderr2);
         console.log('✅ get_setup.py output:', stdout2);
-      });
+
         exec(`${venvPython} ${registerDeviceScript}`, (err3, stdout3, stderr3) => {
           if (err3) return console.error('❌ register_device.py failed:', err3.message);
           if (stderr3) console.warn('⚠️ register_device.py stderr:', stderr3);
           console.log('✅ register_device.py output:', stdout3);
-          });
-          exec(restartCmd, (err3, stdout3, stderr3) => {
-            if (err3) return console.error('❌ Restart failed:', err3.message);
-            if (stderr3) console.warn('⚠️ Restart stderr:', stderr3);
+
+          exec(restartCmd, (err4, stdout4, stderr4) => {
+            if (err4) return console.error('❌ Restart failed:', err4.message);
+            if (stderr4) console.warn('⚠️ Restart stderr:', stderr4);
             console.log('🔄 Backend restarted successfully.');
           });
+        });
+      });
     });
   }
 });
-
