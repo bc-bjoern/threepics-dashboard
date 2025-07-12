@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e  # Sofort bei Fehler abbrechen
+
+# Optionales Logfile
+LOGFILE="/var/log/threepics-postrm.log"
+exec >> "$LOGFILE" 2>&1
+echo "🧹 postrm started at $(date)"
+
+# --- 1. Dienste deaktivieren ---
+echo "🔌 Disabling systemd services ..."
+systemctl disable threepics-backend.service || true
+systemctl disable threepics-frontend.service || true
+systemctl daemon-reload || true
+
+# --- 2. Cronjobs entfernen ---
+echo "📆 Removing cronjobs ..."
+crontab -u threepics -l 2>/dev/null | grep -v 'threepics-dashboard' | crontab -u threepics - || true
+
+# --- 3. Benutzerverzeichnis entfernen ---
+echo "🗑 Removing /opt/threepics ..."
+rm -rf /opt/threepics
+
+# --- 4. Benutzer entfernen ---
+echo "👤 Removing user 'threepics' ..."
+if id "threepics" &>/dev/null; then
+  userdel -r threepics || true
+fi
+
+# --- 5. Sudoers-Datei entfernen ---
+echo "🧾 Removing sudoers config ..."
+rm -f /etc/sudoers.d/threepics
+
+# --- 6. Logdatei bereinigen ---
+echo "🧹 Cleaning up log ..."
+rm -f /var/log/threepics-postinst.log
+
+echo "✅ postrm completed at $(date)"
+exit 0

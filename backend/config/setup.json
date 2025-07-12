@@ -1,0 +1,7 @@
+{
+  "delay_seconds": 5,
+  "language": "en",
+  "sync_interval": 300,
+  "transition_effect": "zoom",
+  "transition_duration": "0.8"
+}

@@ -1,0 +1,7 @@
+threepics ALL=(ALL) NOPASSWD: \
+  /bin/systemctl restart threepics-backend.service, \
+  /bin/systemctl restart threepics-frontend.service, \
+  /bin/systemctl restart getty@tty1.service, \
+  /sbin/reboot, \
+  /bin/journalctl -u threepics-backend.service *, \
+  /bin/journalctl -u threepics-frontend.service *
