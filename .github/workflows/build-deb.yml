@@ -30,8 +30,6 @@ jobs:
           mkdir -p "${{ env.BUILDROOT }}"
           cp -r setup/debian/* "${{ env.BUILDROOT }}/"
           mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PACKAGE_NAME }}"
-          cp -r frontend "${{ env.BUILDROOT }}/opt/${{ env.PACKAGE_NAME }}/frontend"
-          cp -r backend "${{ env.BUILDROOT }}/opt/${{ env.PACKAGE_NAME }}/backend"
 
       - name: Fix Permissions
         run: |
