@@ -10,6 +10,9 @@ export default function WlanSettings() {
   const [wifiMessage, setWifiMessage] = useState(null);
   const [wifiSaving, setWifiSaving] = useState(false);
 
+  const [wifiList, setWifiList] = useState([]);
+  const [loadingScan, setLoadingScan] = useState(false);
+
   const [activeInput, setActiveInput] = useState('ssid');
   const keyboardRef = useRef();
 
@@ -19,26 +22,40 @@ export default function WlanSettings() {
   };
 
   useEffect(() => {
-    if (activeInput === 'ssid') {
-      keyboardRef.current?.setInput(ssid);
-    } else if (activeInput === 'password') {
-      keyboardRef.current?.setInput(wifiPassword);
-    }
+    if (activeInput === 'ssid') keyboardRef.current?.setInput(ssid);
+    else if (activeInput === 'password') keyboardRef.current?.setInput(wifiPassword);
   }, [activeInput, ssid, wifiPassword]);
+
+  const handleScan = async () => {
+    setLoadingScan(true);
+    setWifiMessage(null);
+    try {
+      const res = await axios.get(`${backendUrl}/api/wifi/scan`);
+      setWifiList(res.data);
+    } catch (err) {
+      setWifiMessage('Fehler beim Scannen.');
+      console.error(err);
+    } finally {
+      setLoadingScan(false);
+    }
+  };
 
   const handleConnectWifi = async () => {
     if (!ssid) {
-      setWifiMessage('Bitte SSID eingeben.');
+      setWifiMessage('Bitte SSID auswählen oder eingeben.');
       return;
     }
     setWifiSaving(true);
     setWifiMessage(null);
 
     try {
-      await axios.post(`${backendUrl}/api/save-wifi`, { ssid, password: wifiPassword });
-      setWifiMessage('WLAN-Daten erfolgreich gespeichert.');
+      const res = await axios.post(`${backendUrl}/api/wifi/connect`, {
+        ssid,
+        password: wifiPassword,
+      });
+      setWifiMessage(res.data.message || 'Verbunden.');
     } catch (error) {
-      setWifiMessage('Fehler beim Speichern der WLAN-Daten.');
+      setWifiMessage('Fehler beim Verbinden mit WLAN.');
       console.error(error);
     } finally {
       setWifiSaving(false);
@@ -47,7 +64,31 @@ export default function WlanSettings() {
 
   return (
     <div>
-      <p>WLAN-Einstellungen hier...</p>
+      <h3>WLAN auswählen</h3>
+
+      <button onClick={handleScan} disabled={loadingScan} style={{ marginBottom: '1rem' }}>
+        {loadingScan ? 'Suche...' : 'Netzwerke neu suchen'}
+      </button>
+
+      {wifiList.length > 0 && (
+        <ul style={{ maxHeight: 150, overflowY: 'auto', padding: 0 }}>
+          {wifiList.map((net, idx) => (
+            <li
+              key={idx}
+              style={{
+                listStyle: 'none',
+                padding: '0.3rem 0.6rem',
+                margin: '0.2rem 0',
+                background: net.ssid === ssid ? '#ccc' : '#eee',
+                cursor: 'pointer',
+              }}
+              onClick={() => setSsid(net.ssid)}
+            >
+              {net.ssid} ({net.signal}%)
+            </li>
+          ))}
+        </ul>
+      )}
 
       <input
         type="text"
@@ -55,7 +96,7 @@ export default function WlanSettings() {
         value={ssid}
         onFocus={() => setActiveInput('ssid')}
         onChange={e => setSsid(e.target.value)}
-        style={{ width: '100%', marginBottom: '1rem', padding: '0.5rem' }}
+        style={{ width: '100%', marginTop: '1rem', marginBottom: '1rem', padding: '0.5rem' }}
         disabled={wifiSaving}
       />
 
@@ -80,10 +121,11 @@ export default function WlanSettings() {
         disabled={wifiSaving}
         style={{ padding: '0.5rem 1rem', cursor: wifiSaving ? 'not-allowed' : 'pointer' }}
       >
-        {wifiSaving ? 'Speichert...' : 'Verbinden'}
+        {wifiSaving ? 'Verbindung läuft...' : 'Verbinden'}
       </button>
 
       {wifiMessage && <p style={{ marginTop: '1rem' }}>{wifiMessage}</p>}
     </div>
   );
 }
+
