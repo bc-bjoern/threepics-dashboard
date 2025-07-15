@@ -1,5 +1,10 @@
 import { useState } from 'react';
 
+// Language Loader
+import { useTranslation } from 'react-i18next';
+import LanguageLoader from './LanguageLoader';
+import './i18n';
+
 // Components
 import MessageManager from './components/MessageManager';
 import SettingsModal from './components/SettingsModal';
@@ -13,6 +18,7 @@ import useCursorControl from './hooks/useCursorControl';
 
 function App() {
   useCursorControl();
+  const { t } = useTranslation();
 
   const [settingsMenu, setSettingsMenu] = useState('wlan');
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -39,6 +45,7 @@ function App() {
 
   return (
     <>
+      <LanguageLoader />
       {/* Click Zones ganz oben */}
       <ClickZones
         onPrev={handlePrev}

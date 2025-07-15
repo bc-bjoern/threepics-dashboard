@@ -3,8 +3,10 @@ import WlanSettings from './WlanSettings';
 import OAuthSettings from './OAuthSettings';
 import MediaManagement from './MediaManagement';
 import AdminSettings from './AdminSettings';  
+import { useTranslation } from 'react-i18next';
 
 const SettingsModal = ({ isOpen, onClose, settingsMenu, setSettingsMenu }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
@@ -39,66 +41,66 @@ const SettingsModal = ({ isOpen, onClose, settingsMenu, setSettingsMenu }) => {
           overflowY: 'auto',
         }}
       >
-        <h2 style={{ marginTop: 0 }}>Settings</h2>
+        <h2 style={{ marginTop: 0 }}>{t('settings')}</h2>
 
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', gap: '0.5rem' }}>
-          <button
-            onClick={() => setSettingsMenu('wlan')}
-            style={{
-              flex: 1,
-              padding: '0.5rem',
-              fontWeight: settingsMenu === 'wlan' ? 'bold' : 'normal',
-              backgroundColor: settingsMenu === 'wlan' ? '#ddd' : 'transparent',
-              border: '1px solid #ccc',
-              cursor: 'pointer',
-              color: 'black',
-            }}
-          >
-            Anmeldung
-          </button>
-          <button
-            onClick={() => setSettingsMenu('media')}
-            style={{
-              flex: 1,
-              padding: '0.5rem',
-              fontWeight: settingsMenu === 'media' ? 'bold' : 'normal',
-              backgroundColor: settingsMenu === 'media' ? '#ddd' : 'transparent',
-              border: '1px solid #ccc',
-              cursor: 'pointer',
-              color: 'black',
-            }}
-          >
-            Medien löschen
-          </button>
-          <button
-            onClick={() => setSettingsMenu('admin')}
-            style={{
-              flex: 1,
-              padding: '0.5rem',
-              fontWeight: settingsMenu === 'admin' ? 'bold' : 'normal',
-              backgroundColor: settingsMenu === 'admin' ? '#ddd' : 'transparent',
-              border: '1px solid #ccc',
-              cursor: 'pointer',
-              color: 'black',
-            }}
-          >
-            WLAN
-          </button>
-          <button
-            onClick={() => setSettingsMenu('anmeldung')}
-            style={{
-              flex: 1,
-              padding: '0.5rem',
-              fontWeight: settingsMenu === 'anmeldung' ? 'bold' : 'normal',
-              backgroundColor: settingsMenu === 'anmeldung' ? '#ddd' : 'transparent',
-              border: '1px solid #ccc',
-              cursor: 'pointer',
-              color: 'black',
-            }}
-          >
-            Admin
-          </button>
-        </div>
+        <button
+          onClick={() => setSettingsMenu('anmeldung')}
+          style={{
+            flex: 1,
+            padding: '0.5rem',
+            fontWeight: settingsMenu === 'anmeldung' ? 'bold' : 'normal',
+            backgroundColor: settingsMenu === 'anmeldung' ? '#ddd' : 'transparent',
+            border: '1px solid #ccc',
+            cursor: 'pointer',
+            color: 'black',
+          }}
+        >
+          Anmeldung
+        </button>
+        <button
+          onClick={() => setSettingsMenu('wlan')}
+          style={{
+            flex: 1,
+            padding: '0.5rem',
+            fontWeight: settingsMenu === 'wlan' ? 'bold' : 'normal',
+            backgroundColor: settingsMenu === 'wlan' ? '#ddd' : 'transparent',
+            border: '1px solid #ccc',
+            cursor: 'pointer',
+            color: 'black',
+          }}
+        >
+          WLAN
+        </button>
+        <button
+          onClick={() => setSettingsMenu('media')}
+          style={{
+            flex: 1,
+            padding: '0.5rem',
+            fontWeight: settingsMenu === 'media' ? 'bold' : 'normal',
+            backgroundColor: settingsMenu === 'media' ? '#ddd' : 'transparent',
+            border: '1px solid #ccc',
+            cursor: 'pointer',
+            color: 'black',
+          }}
+        >
+          Medien löschen
+        </button>
+        <button
+          onClick={() => setSettingsMenu('admin')}
+          style={{
+            flex: 1,
+            padding: '0.5rem',
+            fontWeight: settingsMenu === 'admin' ? 'bold' : 'normal',
+            backgroundColor: settingsMenu === 'admin' ? '#ddd' : 'transparent',
+            border: '1px solid #ccc',
+            cursor: 'pointer',
+            color: 'black',
+          }}
+        >
+          Admin
+        </button>
+      </div>
 
 
         {settingsMenu === 'wlan' && <WlanSettings />}
@@ -115,7 +117,7 @@ const SettingsModal = ({ isOpen, onClose, settingsMenu, setSettingsMenu }) => {
             cursor: 'pointer',
           }}
         >
-          Schließen
+          {t('close')}
         </button>
       </div>
     </div>
