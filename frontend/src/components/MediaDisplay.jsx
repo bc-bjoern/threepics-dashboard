@@ -68,29 +68,113 @@ const allTransitions = Object.keys(variants);
 
 function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', transitionDuration = 0.8 }) {
   const [effect, setEffect] = useState(() =>
-    transitionEffect === 'random'
+    transitionEffect === 'none'
+      ? null
+      : transitionEffect === 'random'
       ? allTransitions[Math.floor(Math.random() * allTransitions.length)]
       : variants[transitionEffect]
       ? transitionEffect
       : 'fade'
   );
 
+
   useEffect(() => {
     const resolvedEffect =
-      transitionEffect === 'random'
+      transitionEffect === 'none'
+        ? null
+        : transitionEffect === 'random'
         ? allTransitions[Math.floor(Math.random() * allTransitions.length)]
         : variants[transitionEffect]
         ? transitionEffect
         : 'fade';
 
     setEffect(resolvedEffect);
-    console.log('🎞 Effekt gesetzt:', resolvedEffect);
+    console.log('🎞 Effekt gesetzt:', resolvedEffect || 'Kein Effekt');
   }, [currentIndex, transitionEffect]);
 
-  if (!currentMedia) return null;
+
+if (!currentMedia) return null;
 
   const mediaKey = `${currentMedia.type}-${currentMedia.url || currentIndex}`;
 
+  const MediaContent = () => {
+    if (currentMedia.type === 'image') {
+      return (
+        <img
+          src={`${backendUrl}${currentMedia.url}`}
+          alt={`Media ${currentIndex}`}
+          style={{
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+          }}
+        />
+      );
+    }
+
+    if (currentMedia.type === 'video') {
+      return (
+        <video
+          src={`${backendUrl}${currentMedia.url}`}
+          controls
+          autoPlay
+          muted
+          style={{
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+          }}
+        />
+      );
+    }
+
+    if (currentMedia.type === 'text') {
+      return (
+        <p
+          style={{
+            fontSize: '2rem',
+            color: '#ffffff',
+            whiteSpace: 'pre-line',
+            fontFamily: `'Noto Color Emoji', 'Segoe UI Emoji', 'Apple Color Emoji', 'Twemoji Mozilla', sans-serif`,
+            WebkitFontSmoothing: 'antialiased',
+            padding: 20,
+            maxWidth: '80vw',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}
+        >
+          {currentMedia.text}
+        </p>
+      );
+    }
+
+    return null;
+  };
+
+  if (effect === null) {
+    // Kein Effekt → einfaches div
+    return (
+      <div
+        key={mediaKey}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'black',
+          zIndex: 10,
+        }}
+      >
+        <MediaContent />
+      </div>
+    );
+  }
+
+  // Mit Effekt → motion.div verwenden
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -111,54 +195,12 @@ function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', t
           backgroundColor: 'black',
           zIndex: 10,
           perspective: 1000,
-          transformStyle: 'preserve-3d',         
-          backfaceVisibility: 'hidden',           
+          transformStyle: 'preserve-3d',
+          backfaceVisibility: 'hidden',
           willChange: 'transform, opacity',
         }}
       >
-        {currentMedia.type === 'image' && (
-          <img
-            src={`${backendUrl}${currentMedia.url}`}
-            alt={`Media ${currentIndex}`}
-            style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
-              objectFit: 'contain',
-            }}
-          />
-        )}
-
-        {currentMedia.type === 'video' && (
-          <video
-            src={`${backendUrl}${currentMedia.url}`}
-            controls
-            autoPlay
-            muted
-            style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
-              objectFit: 'contain',
-            }}
-          />
-        )}
-
-        {currentMedia.type === 'text' && (
-          <p
-            style={{
-              fontSize: '2rem',
-              color: '#ffffff',
-              whiteSpace: 'pre-line',
-              fontFamily: `'Noto Color Emoji', 'Segoe UI Emoji', 'Apple Color Emoji', 'Twemoji Mozilla', sans-serif`,
-	      WebkitFontSmoothing: 'antialiased',
-              padding: 20,
-              maxWidth: '80vw',
-              margin: '0 auto',
-              textAlign: 'center',
-            }}
-          >
-            {currentMedia.text}
-          </p>
-        )}
+        <MediaContent />
       </motion.div>
     </AnimatePresence>
   );
