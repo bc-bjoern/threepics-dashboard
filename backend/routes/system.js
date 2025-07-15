@@ -1,8 +1,21 @@
 // routes/system.js
 import express from 'express';
 import { exec } from 'child_process';
+import os from 'os';
+import dns from 'dns';
 
 const router = express.Router();
+
+// Internet-Verbindungsprüfung
+router.get('/online', (req, res) => {
+  dns.lookup('google.com', (err) => {
+    if (err && err.code === 'ENOTFOUND') {
+      return res.json({ online: false });
+    } else {
+      return res.json({ online: true });
+    }
+  });
+});
 
 // Reboot-Route
 router.post('/reboot', (req, res) => {
@@ -27,6 +40,23 @@ router.post('/restart-services', (req, res) => {
     res.send('Dienste wurden erfolgreich neugestartet.');
   });
 });
+
+router.get('/ip', (req, res) => {
+  const interfaces = os.networkInterfaces();
+  let ip = 'Unbekannt';
+
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        ip = iface.address;
+        break;
+      }
+    }
+  }
+
+  res.json({ ip });
+});
+
 
 export default router;
 
