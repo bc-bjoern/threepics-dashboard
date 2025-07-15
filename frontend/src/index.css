@@ -1,3 +1,11 @@
+body.hide-cursor {
+  cursor: none;
+}
+
+body.show-cursor {
+  cursor: auto;
+}
+
 :root {
   line-height: 1.5;
   font-weight: 400;
@@ -44,7 +52,6 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
-  cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {

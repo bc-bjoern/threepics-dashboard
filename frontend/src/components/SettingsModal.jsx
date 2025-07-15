@@ -54,20 +54,6 @@ const SettingsModal = ({ isOpen, onClose, settingsMenu, setSettingsMenu }) => {
               color: 'black',
             }}
           >
-            WLAN
-          </button>
-          <button
-            onClick={() => setSettingsMenu('anmeldung')}
-            style={{
-              flex: 1,
-              padding: '0.5rem',
-              fontWeight: settingsMenu === 'anmeldung' ? 'bold' : 'normal',
-              backgroundColor: settingsMenu === 'anmeldung' ? '#ddd' : 'transparent',
-              border: '1px solid #ccc',
-              cursor: 'pointer',
-              color: 'black',
-            }}
-          >
             Anmeldung
           </button>
           <button
@@ -91,6 +77,20 @@ const SettingsModal = ({ isOpen, onClose, settingsMenu, setSettingsMenu }) => {
               padding: '0.5rem',
               fontWeight: settingsMenu === 'admin' ? 'bold' : 'normal',
               backgroundColor: settingsMenu === 'admin' ? '#ddd' : 'transparent',
+              border: '1px solid #ccc',
+              cursor: 'pointer',
+              color: 'black',
+            }}
+          >
+            WLAN
+          </button>
+          <button
+            onClick={() => setSettingsMenu('anmeldung')}
+            style={{
+              flex: 1,
+              padding: '0.5rem',
+              fontWeight: settingsMenu === 'anmeldung' ? 'bold' : 'normal',
+              backgroundColor: settingsMenu === 'anmeldung' ? '#ddd' : 'transparent',
               border: '1px solid #ccc',
               cursor: 'pointer',
               color: 'black',

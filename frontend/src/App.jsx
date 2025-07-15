@@ -9,8 +9,11 @@ import MediaFooter from './components/MediaFooter';
 
 // Hooks
 import useMedia from './hooks/useMedia';
+import useCursorControl from './hooks/useCursorControl';
 
 function App() {
+  useCursorControl();
+
   const [settingsMenu, setSettingsMenu] = useState('wlan');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const toggleSettings = () => {
