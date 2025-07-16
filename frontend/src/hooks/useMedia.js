@@ -36,7 +36,6 @@ export default function useMedia() {
         setDelay(seconds * 1000);
         setTransitionEffect(effect);
         setTransitionDuration(duration);
-        console.log(`[Frontend] ⏱ Delay: ${seconds}s – 🎞 Effekt: ${effect} – ⏳ Dauer: ${duration}s`);
       })
       .catch(err => {
         console.warn('[Frontend] ⚠️ Fehler beim Laden des Delays:', err);
@@ -74,12 +73,6 @@ export default function useMedia() {
 
     return () => clearInterval(intervalRef.current);
   }, [media, delay]);
-
-  useEffect(() => {
-    if (media.length > 0) {
-      console.log('Current media:', media[currentIndex]);
-    }
-  }, [currentIndex, media]);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + media.length) % media.length);

@@ -59,10 +59,22 @@ def fetch_setup_data(token):
 
 def save_setup_to_file(setup_data):
     os.makedirs(CONFIG_DIR, exist_ok=True)
+
+    # Prüfen, ob Datei existiert und vergleichen
+    if os.path.exists(OUTPUT_FILE):
+        with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+            try:
+                existing_data = json.load(f)
+            except json.JSONDecodeError:
+                existing_data = None
+
+        if existing_data == setup_data:
+            return
+
+    # Speichern, wenn keine Datei oder Änderungen vorhanden
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(setup_data, f, indent=2, ensure_ascii=False)
-    print(f"✅ Setup gespeichert unter: {OUTPUT_FILE}")
-
+    print(f"✅ Setup wurde geändert und gespeichert unter: {OUTPUT_FILE}")
 
 def main():
     client_id, client_secret = load_credentials()

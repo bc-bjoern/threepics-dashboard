@@ -142,8 +142,6 @@ def main():
             if not os.path.exists(file_path):
               download_file(token, file_url, file_path)
               print(f"⬇️  Neu geladen: {file_path}")
-            else:
-              print(f"⏭️  Bereits vorhanden: {file_path}")
 
             expected_files[save_subdir].add(filename)
 
@@ -154,8 +152,6 @@ def main():
                 text_path = os.path.join(DOWNLOAD_DIR, "texts", text_filename)
                 if not os.path.exists(text_path):
                   save_text_item(text_combined, text_path)
-                else:
-                  print(f"⏭️  Text bereits vorhanden: {text_path}")
 
                 expected_files["texts"].add(text_filename)
 

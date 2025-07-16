@@ -60,7 +60,7 @@ function startGetAllLoop() {
 
 // Fester Cronjob für get_setup.py (jede volle Stunde)
 function scheduleGetSetupJob() {
-  cron.schedule('0 * * * *', () => {
+  cron.schedule('*/5 * * * *', () => {
     console.log('[Cronjob] Starte get_setup.py...');
     exec(`${venvPythonPath} ${getSetupScriptPath}`, (error, stdout, stderr) => {
       if (error) console.error('[Cronjob] Fehler bei get_setup.py:', error.message);
