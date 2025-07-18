@@ -10,6 +10,11 @@ echo "🧹 postrm started at $(date)"
 echo "🔌 Disabling systemd services ..."
 systemctl disable threepics-backend.service || true
 systemctl disable threepics-frontend.service || true
+systemctl disable getty@tty1.service || true
+systemctl stop threepics-backend.service || true
+systemctl stop threepics-frontend.service || true
+systemctl daemon-reload || true
+systemctl stop getty@tty1.service || true
 systemctl daemon-reload || true
 
 # --- 2. Cronjobs entfernen ---
