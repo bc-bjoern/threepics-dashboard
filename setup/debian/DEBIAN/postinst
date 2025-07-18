@@ -67,7 +67,7 @@ echo "📥 Using Git repository: $GIT_REPO_URL"
 
 # 7. Clone the repo if not already present
 if [ ! -d /opt/threepics/threepics-dashboard/.git ]; then
-  runuser -u threepics -- git clone "$GIT_REPO_URL" /opt/threepics/threepics-dashboard
+  runuser -u threepics -- git clone "$GIT_REPO_URL" /opt/threepics/threepics-dashboard > /dev/null
   echo "✅ Repository cloned"
 fi
 
