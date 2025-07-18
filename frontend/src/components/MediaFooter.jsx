@@ -1,5 +1,6 @@
 import React from 'react';
 import useDevice from '../hooks/useDevice';
+import RebootIndicator from './RebootIndicator';
 
 export default function MediaFooter({ subtitle, type }) {
   const device = useDevice();
@@ -34,6 +35,7 @@ export default function MediaFooter({ subtitle, type }) {
         margin: 0,
       }}
     >
+      <RebootIndicator />
       {subtitle || ''}
     </div>
   );

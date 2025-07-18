@@ -28,6 +28,8 @@ import messagesRouter from './routes/messages.js';
 import systemRouter from './routes/system.js';
 import setupRouter from './routes/setup.js';
 import deviceRouter from './routes/device.js';
+import rebootRoute from './routes/reboot.js';
+
 
 import { startWatcher } from './watchers/watch-downloads.js';
 import os from 'os';
@@ -61,6 +63,7 @@ app.use('/api', credentialsRouter);
 app.use('/api/messages', messagesRouter);
 app.use('/api/system', systemRouter);
 app.use('/api', setupRouter);
+app.use('/api', rebootRoute);
 
 // Statischer Pfad korrekt mounten
 app.use('/downloads', express.static(path.resolve(__dirname, 'downloads')));

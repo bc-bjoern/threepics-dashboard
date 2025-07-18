@@ -89,7 +89,6 @@ function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', t
         : 'fade';
 
     setEffect(resolvedEffect);
-    console.log('🎞 Effekt gesetzt:', resolvedEffect || 'Kein Effekt');
   }, [currentIndex, transitionEffect]);
 
 
