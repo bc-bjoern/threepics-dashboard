@@ -11,6 +11,7 @@ jobs:
   build-deb:
     runs-on: ubuntu-latest
     env:
+      PROJECT_NAME: threepics
       PACKAGE_NAME: threepics-dashboard
 
     steps:
@@ -29,7 +30,7 @@ jobs:
         run: |
           mkdir -p "${{ env.BUILDROOT }}"
           cp -r setup/debian/* "${{ env.BUILDROOT }}/"
-          mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PACKAGE_NAME }}"
+          mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}"
 
       - name: Fix Permissions
         run: |
