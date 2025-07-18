@@ -155,6 +155,14 @@ systemctl daemon-reexec
 systemctl daemon-reload
 systemctl restart getty@tty1.service
 
+# Write current Git tag to .VERSION file
+cd /opt/threepics/threepics-dashboard
+CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
+echo "$CURRENT_TAG" > /opt/threepics/.VERSION
+chown threepics:threepics /opt/threepics/.VERSION
+chmod 644 /opt/threepics/.VERSION
+echo "📄 Version recorded: $CURRENT_TAG"
+
 # 14. Create user-friendly .vimrc
 if [ ! -f "$VIMRC" ]; then
   cat << 'EOF' > "$VIMRC"
@@ -211,13 +219,13 @@ echo "📆 Configuring cronjobs..."
 CRONTAB_TMP=$(mktemp)
 crontab -u threepics -l 2>/dev/null > "$CRONTAB_TMP" || true
 
-if ! grep -q 'git pull' "$CRONTAB_TMP"; then
-  echo "@reboot cd /opt/threepics/threepics-dashboard && git pull >> /var/log/threepics-cron.log 2>&1" >> "$CRONTAB_TMP"
-  echo "0 2 1 * * cd /opt/threepics/threepics-dashboard && git pull" >> "$CRONTAB_TMP"
+# Nur hinzufügen, wenn update.sh noch nicht eingetragen ist
+if ! grep -q 'update.sh' "$CRONTAB_TMP"; then
+  echo "0 3 * * 0 /opt/threepics/threepics-dashboard/setup/update.sh 2>&1" >> "$CRONTAB_TMP"
   crontab -u threepics "$CRONTAB_TMP"
-  echo "✅ Cronjobs added"
+  echo "✅ Cronjob for update.sh added"
 else
-  echo "🔁 Cronjobs already exist – skipping"
+  echo "🔁 Cronjob for update.sh already exists – skipping"
 fi
 
 rm -f "$CRONTAB_TMP"
