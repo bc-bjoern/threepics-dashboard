@@ -34,8 +34,6 @@ router.get('/', (req, res) => {
     media.push(...images, ...videos);
 
     console.log(`[Backend] Gefundene Medien: ${media.length}`);
-    console.log('MEDIA_DIR:', MEDIA_DIR);
-    console.log('Alle Dateien:');
     media.forEach(m => console.log(m));
 
     const mediaForClient = media.map(m => {

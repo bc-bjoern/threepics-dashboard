@@ -1,31 +1,43 @@
 import sys
-import requests
+import os
 import json
+import requests
 
-# OAuth credentials from your config
-CLIENT_ID = ""
-CLIENT_SECRET = "-xHTfCY9bZj9ou7l6-6Yb7NUV5kNAuBbM"
-TOKEN_URL = "https://three-pics.com/o/token/"  # OAuth token endpoint
+# Konfiguration
+CONFIG_DIR = "config"
+CREDENTIALS_FILE = os.path.join(CONFIG_DIR, "credentials.json")
+API_URL = "https://three-pics.com/api/mark-to-delete/"
+OAUTH2_TOKEN_URL = "https://three-pics.com/o/token/"
 
-# API endpoint to mark media as to be deleted
-API_URL = "http://threepics:8000/api/mark-to-delete/"
+def load_credentials():
+    try:
+        with open(CREDENTIALS_FILE, "r", encoding="utf-8") as f:
+            creds = json.load(f)
+            client_id = creds.get("client_id")
+            client_secret = creds.get("client_secret")
+            if not client_id or not client_secret:
+                raise ValueError("Fehlende client_id oder client_secret in credentials.json")
+            return client_id, client_secret
+    except FileNotFoundError:
+        raise FileNotFoundError(f"⚠️ Datei nicht gefunden: {CREDENTIALS_FILE}")
+    except json.JSONDecodeError:
+        raise ValueError(f"⚠️ Ungültiges JSON in {CREDENTIALS_FILE}")
 
-def get_access_token():
+def get_access_token(client_id, client_secret):
     data = {
         'grant_type': 'client_credentials',
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'scope': 'read write',  # Use your needed scopes here
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'scope': 'read write',
     }
-    print(f"Requesting access token from {TOKEN_URL} with client_id={CLIENT_ID}")
-    response = requests.post(TOKEN_URL, data=data)
-    print(f"Token response status: {response.status_code}")
-    print(f"Token response headers: {response.headers}")
-    print(f"Token response body: {response.text}")
-    response.raise_for_status()
+    response = requests.post(OAUTH2_TOKEN_URL, data=data)
+    if response.status_code != 200:
+        print(f"❌ Fehler beim Token-Abruf: {response.status_code} {response.text}")
+        response.raise_for_status()
     token_data = response.json()
-    access_token = token_data.get('access_token')
-    print(f"Access token received: {access_token}")
+    access_token = token_data.get("access_token")
+    if not access_token:
+        raise ValueError("Kein access_token erhalten.")
     return access_token
 
 def mark_media_to_delete(access_token, filename):
@@ -38,18 +50,21 @@ def mark_media_to_delete(access_token, filename):
     }
     response = requests.post(API_URL, json=data, headers=headers)
     if response.status_code == 200:
-        print("Success:", response.json())
+        print("✅ Erfolgreich markiert:", response.json())
     else:
-        print("Error:", response.status_code, response.text)
+        print("❌ Fehler beim Markieren:", response.status_code, response.text)
 
-
-if __name__ == "__main__":
+def main():
     try:
         if len(sys.argv) < 2:
-            raise Exception("Filename argument required")
+            raise ValueError("⚠️ Bitte gib einen Dateinamen als Argument an.")
         filename = sys.argv[1]
 
-        token = get_access_token()
+        client_id, client_secret = load_credentials()
+        token = get_access_token(client_id, client_secret)
         mark_media_to_delete(token, filename)
     except Exception as e:
-        print("Error:", e)
+        print("❌ Fehler:", e)
+
+if __name__ == "__main__":
+    main()
