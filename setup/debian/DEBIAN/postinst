@@ -154,7 +154,6 @@ systemctl enable threepics-frontend.service
 systemctl enable getty@tty1.service
 systemctl daemon-reexec
 systemctl daemon-reload
-systemctl restart getty@tty1.service
 
 # Write current Git tag to .VERSION file
 cd /opt/threepics/threepics-dashboard
