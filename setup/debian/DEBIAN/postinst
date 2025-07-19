@@ -151,6 +151,7 @@ fi
 # 13. Enable and reload services
 systemctl enable threepics-backend.service
 systemctl enable threepics-frontend.service
+systemctl enable getty@tty1.service
 systemctl daemon-reexec
 systemctl daemon-reload
 systemctl restart getty@tty1.service
