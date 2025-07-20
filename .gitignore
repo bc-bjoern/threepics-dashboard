@@ -76,3 +76,7 @@ backend/downloads/*
 
 # deb
 *.deb
+
+# version
+.VERSION
+.reboot_required

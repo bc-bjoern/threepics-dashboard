@@ -63,16 +63,21 @@ export default function useMedia() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (media.length === 0 || !delay) return;
 
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % media.length);
+  useEffect(() => {
+    if (media.length === 0 || !delay || currentIndex >= media.length) return;
+
+    const current = media[currentIndex];
+    if (!current || current.type === 'video') {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % media.length);
     }, delay);
 
-    return () => clearInterval(intervalRef.current);
-  }, [media, delay]);
+    return () => clearTimeout(timeout);
+  }, [media, delay, currentIndex]);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + media.length) % media.length);

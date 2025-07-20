@@ -79,6 +79,12 @@ function App() {
               currentIndex={currentIndex}
               transitionEffect={transitionEffect}
               transitionDuration={transitionDuration}
+              onMediaEnd={() => {
+                // Nur bei Video-Ende ausgeführt
+                if (currentMedia?.type === 'video') {
+                  handleNext();
+                }
+              }}
             />
             <MediaFooter subtitle={currentMedia.subtitle} type={currentMedia.type} />
           </>

@@ -140,10 +140,13 @@ if [ -d "$BACKEND_DIR" ]; then
   cd "$BACKEND_DIR"
   runuser -u threepics -- pnpm install
   python3 -m venv .venv
-  source .venv/bin/activate
-  pip install --upgrade pip
-  pip install -r scripts/requirements.txt
-  deactivate
+  chown -R threepics:threepics .venv
+  runuser -u threepics -- bash -c "
+	source $BACKEND_DIR/.venv/bin/activate && \
+    pip install --upgrade pip && \
+    pip install -r $BACKEND_DIR/scripts/requirements.txt
+	deactivate
+  "
 else
   echo "⚠️ Backend directory not found"
 fi
@@ -151,9 +154,17 @@ fi
 # 13. Enable and reload services
 systemctl enable threepics-backend.service
 systemctl enable threepics-frontend.service
+systemctl enable getty@tty1.service
 systemctl daemon-reexec
 systemctl daemon-reload
-systemctl restart getty@tty1.service
+
+# Write current Git tag to .VERSION file
+cd /opt/threepics/threepics-dashboard
+CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
+echo "$CURRENT_TAG" > /opt/threepics/.VERSION
+chown threepics:threepics /opt/threepics/.VERSION
+chmod 644 /opt/threepics/.VERSION
+echo "📄 Version recorded: $CURRENT_TAG"
 
 # 14. Create user-friendly .vimrc
 if [ ! -f "$VIMRC" ]; then
@@ -211,13 +222,13 @@ echo "📆 Configuring cronjobs..."
 CRONTAB_TMP=$(mktemp)
 crontab -u threepics -l 2>/dev/null > "$CRONTAB_TMP" || true
 
-if ! grep -q 'git pull' "$CRONTAB_TMP"; then
-  echo "@reboot cd /opt/threepics/threepics-dashboard && git pull >> /var/log/threepics-cron.log 2>&1" >> "$CRONTAB_TMP"
-  echo "0 2 1 * * cd /opt/threepics/threepics-dashboard && git pull" >> "$CRONTAB_TMP"
+# Nur hinzufügen, wenn update.sh noch nicht eingetragen ist
+if ! grep -q 'update.sh' "$CRONTAB_TMP"; then
+  echo "0 3 * * 0 /opt/threepics/threepics-dashboard/setup/update.sh 2>&1" >> "$CRONTAB_TMP"
   crontab -u threepics "$CRONTAB_TMP"
-  echo "✅ Cronjobs added"
+  echo "✅ Cronjob for update.sh added"
 else
-  echo "🔁 Cronjobs already exist – skipping"
+  echo "🔁 Cronjob for update.sh already exists – skipping"
 fi
 
 rm -f "$CRONTAB_TMP"

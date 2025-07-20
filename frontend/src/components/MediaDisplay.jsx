@@ -1,5 +1,5 @@
 // src/components/MediaDisplay.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
@@ -66,7 +66,20 @@ const variants = {
 
 const allTransitions = Object.keys(variants);
 
-function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', transitionDuration = 0.8 }) {
+function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', transitionDuration = 0.8, onMediaEnd}) {
+  const videoRef = useRef(null);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (currentMedia?.type === 'video' && video && onMediaEnd) {
+      const handleEnded = () => {
+        console.log('[MediaDisplay] 🎥 Video beendet');
+        onMediaEnd();
+      };
+      video.addEventListener('ended', handleEnded);
+      return () => video.removeEventListener('ended', handleEnded);
+    }
+  }, [currentMedia, onMediaEnd]);
+
   const [effect, setEffect] = useState(() =>
     transitionEffect === 'none'
       ? null
@@ -89,7 +102,6 @@ function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', t
         : 'fade';
 
     setEffect(resolvedEffect);
-    console.log('🎞 Effekt gesetzt:', resolvedEffect || 'Kein Effekt');
   }, [currentIndex, transitionEffect]);
 
 
@@ -115,6 +127,7 @@ if (!currentMedia) return null;
     if (currentMedia.type === 'video') {
       return (
         <video
+          ref={videoRef}
           src={`${backendUrl}${currentMedia.url}`}
           controls
           autoPlay
