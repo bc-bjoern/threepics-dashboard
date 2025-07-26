@@ -1,5 +1,0 @@
-disable-default-queries: false
-
-queries:
-  - exclude:
-      id: js/missing-rate-limiting
