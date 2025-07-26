@@ -1,5 +1,6 @@
 import express from 'express';
 import { exec } from 'child_process';
+import { execFile } from 'child_process';
 
 const router = express.Router();
 
@@ -66,8 +67,10 @@ router.post('/wifi/connect', (req, res) => {
   getWifiInterface((err, iface) => {
     if (err) return res.status(500).json({ error: err.message });
 
-    const cmd = `sudo nmcli device wifi connect "${ssid}" password "${password}" ifname ${iface}`;
-    exec(cmd, (err, stdout, stderr) => {
+    import { execFile } from 'child_process';
+
+    const args = ['nmcli', 'device', 'wifi', 'connect', ssid, 'password', password, 'ifname', iface];
+    execFile('sudo', args, (err, stdout, stderr) => {
       if (err) {
         console.error(`[WIFI] Verbindungsfehler mit "${ssid}":`, stderr);
         return res.status(500).json({ error: stderr.trim() });
@@ -76,6 +79,7 @@ router.post('/wifi/connect', (req, res) => {
       console.log(`[WIFI] Erfolgreich verbunden mit "${ssid}"`);
       res.json({ message: `Erfolgreich verbunden mit "${ssid}"` });
     });
+
   });
 });
 
