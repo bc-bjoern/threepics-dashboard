@@ -3,7 +3,15 @@ import { exec } from 'child_process';
 import path from 'path';
 
 const configPath = path.resolve('config/credentials.json');
-const venvPython = path.resolve('.venv/bin/python3');
+
+import { existsSync } from 'fs';
+
+let venvPython = path.resolve('.venv/bin/python3');
+if (!existsSync(venvPython)) {
+  console.warn('[Python Path] ⚠️ .venv nicht gefunden – verwende System-python3');
+  venvPython = 'python3';
+}
+
 const getAllScript = path.resolve('scripts/get_all.py');
 const getSetupScript = path.resolve('scripts/get_setup.py');
 const registerDeviceScript = path.resolve('scripts/register_device.py');

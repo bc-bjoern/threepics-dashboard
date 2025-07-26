@@ -4,4 +4,6 @@ threepics ALL=(ALL) NOPASSWD: \
   /bin/systemctl restart getty@tty1.service, \
   /sbin/reboot, \
   /bin/journalctl -u threepics-backend.service *, \
-  /bin/journalctl -u threepics-frontend.service *
+  /bin/journalctl -u threepics-frontend.service *, \
+  /usr/bin/nmcli device wifi connect *, \
+  /usr/bin/nmcli device wifi rescan ifname * 

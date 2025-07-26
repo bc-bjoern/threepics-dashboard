@@ -10,7 +10,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const backendRoot = path.resolve(__dirname, '..');
-const venvPythonPath = path.join(backendRoot, '.venv', 'bin', 'python3');
+let pythonExecutable = path.join(backendRoot, '.venv', 'bin', 'python3');
+if (!fs.existsSync(pythonExecutable)) {
+  console.warn('[Python Path] ⚠️ .venv nicht gefunden – verwende System-python3');
+  pythonExecutable = 'python3';
+}
 
 const getAllScriptPath = path.join(backendRoot, 'scripts', 'get_all.py');
 const getSetupScriptPath = path.join(backendRoot, 'scripts', 'get_setup.py');
@@ -47,7 +51,7 @@ function startGetAllLoop() {
 
   const execute = () => {
     console.log('[get_all Loop] Starte get_all.py...');
-    exec(`${venvPythonPath} ${getAllScriptPath}`, (error, stdout, stderr) => {
+    exec(`${pythonExecutable} ${getAllScriptPath}`, (error, stdout, stderr) => {
       if (error) console.error('[get_all Loop] Fehler:', error.message);
       if (stderr) console.error('[get_all Loop] STDERR:', stderr);
       if (stdout) console.log('[get_all Loop] STDOUT:\n', stdout);
@@ -62,7 +66,7 @@ function startGetAllLoop() {
 function scheduleGetSetupJob() {
   cron.schedule('*/5 * * * *', () => {
     console.log('[Cronjob] Starte get_setup.py...');
-    exec(`${venvPythonPath} ${getSetupScriptPath}`, (error, stdout, stderr) => {
+    exec(`${pythonExecutable} ${getSetupScriptPath}`, (error, stdout, stderr) => {
       if (error) console.error('[Cronjob] Fehler bei get_setup.py:', error.message);
       if (stderr) console.error('[Cronjob] STDERR (get_setup.py):', stderr);
       if (stdout) console.log('[Cronjob] STDOUT (get_setup.py):\n', stdout);

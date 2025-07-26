@@ -93,13 +93,57 @@ For developers working with the source:
 
 ## Developer hint 
 
-SSH Tunnel for the win
+SSH tunnel for the win
 
 ``` bash
 ssh -L 9000:localhost:38329 -L 3000:localhost:3000 -L 8081:localhost:8081 <user>@threepics-dashboard
 ```
 
 open localhost:9000
+
+## 🧑‍💻 Developer Setup (Docker-based)
+
+To run the fullstack app locally using Docker, follow these steps:
+
+### 🔧 Requirements
+
+- [Docker](https://www.docker.com/) installed
+- [Docker Compose](https://docs.docker.com/compose/) available
+
+### 🚀 Start the Project
+
+Use the included script to:
+
+- Safely remove `node_modules` from `frontend/` and `backend/` (if they exist)
+- Build all containers from scratch
+- Start the backend and frontend together
+
+```bash
+./run_docker.sh
+```
+
+This ensures a clean environment and prevents issues from architecture mismatches or leftover dependencies.
+
+### 🌐 Access the App
+
+- **Frontend (Vite Dev Server):**
+  The frontend runs on a random port (e.g. `http://localhost:38329`).
+  Check the container logs for the actual URL after startup.
+
+- **Backend (API):**
+  Runs on: [http://localhost:3000](http://localhost:3000)
+
+### 🧹 Cleaning Up
+
+To stop everything and remove volumes:
+
+```bash
+docker compose down --volumes
+```
+
+---
+
+💡 Tip: You can extend `run_docker.sh` with flags or environment variables to switch between development and production setups.
 
 ---
 

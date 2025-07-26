@@ -80,3 +80,5 @@ backend/downloads/*
 # version
 .VERSION
 .reboot_required
+
+frontend/.pnpm-store/
