@@ -67,8 +67,6 @@ router.post('/wifi/connect', (req, res) => {
   getWifiInterface((err, iface) => {
     if (err) return res.status(500).json({ error: err.message });
 
-    import { execFile } from 'child_process';
-
     const args = ['nmcli', 'device', 'wifi', 'connect', ssid, 'password', password, 'ifname', iface];
     execFile('sudo', args, (err, stdout, stderr) => {
       if (err) {
