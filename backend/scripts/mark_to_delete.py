@@ -109,6 +109,7 @@ def mark_media_to_delete(access_token, filename):
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
+        "Accept-Encoding": "gzip"
     }
     data = {
         "filename": filename,

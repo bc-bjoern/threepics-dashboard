@@ -20,7 +20,7 @@ router.post('/save-credentials', async (req, res) => {
   try {
     // Django Login Endpoint aufrufen
     const response = await axios.post('https://three-pics.com/api/login/', { email, password }, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', "Accept-Encoding": "gzip" }
     });
 
     const { client_id, client_secret } = response.data;

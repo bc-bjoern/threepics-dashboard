@@ -213,7 +213,7 @@ def list_media(access_token):
         requests.exceptions.HTTPError: If the request fails.
     """
     url = f"{API_BASE_URL}/media-list/"
-    headers = {"Authorization": f"Bearer {access_token}"}
+    headers = {"Authorization": f"Bearer {access_token}", "Accept-Encoding": "gzip"}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.json()

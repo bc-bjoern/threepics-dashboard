@@ -101,7 +101,7 @@ def fetch_setup_data(token):
         requests.exceptions.HTTPError: If the request fails.
     """
     url = f"{API_BASE_URL}/setup/"
-    headers = {"Authorization": f"Bearer {token}"}
+    headers = {"Authorization": f"Bearer {token}", "Accept-Encoding": "gzip"}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.json()
