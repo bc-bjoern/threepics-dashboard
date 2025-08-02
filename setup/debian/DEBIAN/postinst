@@ -67,6 +67,9 @@ if [ ! -d "$FRONTEND_DIR" ]; then
   mkdir -p "$FRONTEND_DIR"
   chown threepics:threepics "$FRONTEND_DIR"
 fi
+# Log-Inhalt prüfen
+ls -la "$FRONTEND_DIR" || echo "⚠️ frontend directory was not present during postinst"
+
 cat > "$FRONTEND_DIR/.env" <<EOF
 VITE_BACKEND_URL=http://localhost:3000
 VITE_WS_URL=ws://localhost:8081
