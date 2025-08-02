@@ -62,8 +62,11 @@ if [ -f "$CONFIG_FILE" ]; then
 fi
 
 # 8. Create frontend .env file
-mkdir -p "$FRONTEND_DIR"
-chown threepics:threepics "$FRONTEND_DIR"
+if [ ! -d "$FRONTEND_DIR" ]; then
+  echo "⚠️  Creating missing frontend directory: $FRONTEND_DIR"
+  mkdir -p "$FRONTEND_DIR"
+  chown threepics:threepics "$FRONTEND_DIR"
+fi
 cat > "$FRONTEND_DIR/.env" <<EOF
 VITE_BACKEND_URL=http://localhost:3000
 VITE_WS_URL=ws://localhost:8081
