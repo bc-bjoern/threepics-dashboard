@@ -39,6 +39,10 @@ jobs:
       - name: Show Version
         run: echo "Building version ${{ env.VERSION }}"
 
+      - name: Ensure frontend folder exists in .deb structure
+        run: |
+          mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend"
+          touch "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend/.keep"
 
       - name: Prepare Build Directory
         run: |
