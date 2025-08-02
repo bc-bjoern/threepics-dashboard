@@ -1,0 +1,15 @@
+[Unit]
+Description=Threepics Frontend Service
+After=network.target
+
+[Service]
+Type=simple
+User=threepics
+WorkingDirectory=/opt/threepics/threepics-dashboard/frontend
+ExecStartPre=/bin/rm -f /opt/threepics/threepics-dashboard/.reboot_required
+ExecStart=/home/threepics/.npm-global/bin/serve -s dist -l 38329
+Restart=always
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
