@@ -1,7 +1,24 @@
-Origin: Threepics
-Label: Threepics Repository
-Suite: stable
-Codename: stable
 Architectures: armhf
+Codename: stable
 Components: main
+Date: Sun, 03 Aug 2025 19:03:23 +0000
 Description: Threepics Raspberry Pi Repo
+Label: Threepics Repository
+Origin: Threepics
+Suite: stable
+MD5Sum:
+ c7fb53181ae2f9b9ddb80f3b47ee8594              194 Release
+ 6b06366c73c2b21e152dad05cf892caa             1389 main/binary-armhf/Packages
+ e4c51324983b69baa8098fdc8ee5bf47              626 main/binary-armhf/Packages.gz
+SHA1:
+ 9eb494df2ebe6b20446b3731895f8f5860be9891              194 Release
+ e9bdce0d7a381fcba890a237b50b7950d3ec2730             1389 main/binary-armhf/Packages
+ b572bbd9aac79a3aea029e73035699500a66ed4d              626 main/binary-armhf/Packages.gz
+SHA256:
+ 87093519e022fca01bbcf98f18e136cc0ee260eace098e798cf2b2f973ec07db              194 Release
+ 17ed0655a9d11ab25e9bc205a737a968e5654833edae741bdc78b3dea5d30c5b             1389 main/binary-armhf/Packages
+ 0af8e369cb4879cb978fc5c8d30969f1039f47d4bc0dfa28f857698d65afa47f              626 main/binary-armhf/Packages.gz
+SHA512:
+ 58486d85a2c26e30bc08a04c0f143183088d8e2ffebfa7a2bd24e0d5b189544d7a6387969d0bd626776446e956ee43fc708f962804d87427949afd4fb826eba2              194 Release
+ 82afcb09c4fcc1e8eb414d66861ef3fb0e7bad6b76992522863aadc4ff79116257145065dd7e4f9ce71dc1f046326c4ae64a374016d55f298ec74ade5117c360             1389 main/binary-armhf/Packages
+ 54c92bf16fa316a772d6124d1c934ef9f01608bf162c0f31c8506c91adc2c4d5227b959fc9664e62d51297ec4e8bda683d9eca36a57e26f5bea036a1e380dd40              626 main/binary-armhf/Packages.gz
