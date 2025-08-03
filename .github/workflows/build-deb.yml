@@ -46,6 +46,14 @@ jobs:
       - name: Show Version
         run: echo "Building version ${{ env.VERSION }}"
 
+      - name: Prevent dev version in stable
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          if [[ "${{ env.VERSION }}" == *~dev* ]]; then
+            echo "❌ ERROR: dev version must not be released to stable!"
+            exit 1
+          fi
+
       - name: Ensure frontend folder exists in .deb structure
         run: |
           mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend"
