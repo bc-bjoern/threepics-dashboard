@@ -1,0 +1,212 @@
+#!/bin/bash
+set -e  # Exit on any error
+set -x
+
+LOGFILE="/var/log/threepics-postinst.log"
+exec >> "$LOGFILE" 2>&1
+
+echo "➡ postinst started at $(date)"
+
+FRONTEND_DIR="/opt/threepics/threepics-dashboard/frontend"
+BACKEND_DIR="/opt/threepics/threepics-dashboard/backend"
+BASHRC="/home/threepics/.bashrc"
+BASH_PROFILE="/home/threepics/.bash_profile"
+XINITRC="/home/threepics/.xinitrc"
+CONFIG_FILE="/etc/default/threepics-dashboard"
+VIMRC="/home/threepics/.vimrc"
+
+# 1. Fix permissions for critical system files
+chmod 440 /etc/sudoers.d/threepics
+chown root:root /etc/sudoers.d/threepics
+chown root:root /etc/systemd/system/threepics-frontend.service
+chown root:root /etc/systemd/system/threepics-backend.service
+
+# 2. Ensure 'threepics' user exists
+if ! id -u threepics &>/dev/null; then
+  useradd -m -s /bin/bash threepics
+  echo "✅ Created user 'threepics'"
+fi
+
+# 3. Ensure home directory exists and is owned correctly
+if [ ! -d /home/threepics ]; then
+  mkdir -p /home/threepics
+  chown threepics:threepics /home/threepics
+  chmod 755 /home/threepics
+fi
+
+# 4. Create .xinitrc for X11 auto-start
+cat << 'EOF' > "$XINITRC"
+#!/bin/sh
+xset -dpms
+xset s off
+xset s noblank
+
+sleep 5
+
+openbox-session &
+unclutter -idle 0 &
+chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:38329
+EOF
+
+chmod 755 "$XINITRC"
+chown threepics:threepics "$XINITRC"
+echo "✅ .xinitrc created"
+
+# 5. Create /opt/threepics and assign ownership
+mkdir -p /opt/threepics
+chown threepics:threepics /opt/threepics
+chown threepics:threepics "$XINITRC"
+
+# 6. Load Git URL from config or use default
+if [ -f "$CONFIG_FILE" ]; then
+  source "$CONFIG_FILE"
+fi
+
+# 8. Create frontend .env file
+if [ ! -d "$FRONTEND_DIR" ]; then
+  echo "⚠️  Creating missing frontend directory: $FRONTEND_DIR"
+  mkdir -p "$FRONTEND_DIR"
+  chown threepics:threepics "$FRONTEND_DIR"
+fi
+# Log-Inhalt prüfen
+ls -la "$FRONTEND_DIR" || echo "⚠️ frontend directory was not present during postinst"
+
+cat > "$FRONTEND_DIR/.env" <<EOF
+VITE_BACKEND_URL=http://localhost:3000
+VITE_WS_URL=ws://localhost:8081
+EOF
+
+chown threepics:threepics "$FRONTEND_DIR/.env"
+chmod 644 "$FRONTEND_DIR/.env"
+echo "✅ .env written to frontend"
+
+# 9. Verify required tools
+for bin in python3 pip3; do
+  command -v "$bin" >/dev/null || { echo "❌ Missing required tool: $bin"; exit 1; }
+done
+
+# Ensure .bashrc exists
+touch "$BASHRC"
+chown threepics:threepics "$BASHRC"
+chmod 644 "$BASHRC"
+
+# 12b. Install serve globally for threepics user
+echo "📦 Installing serve globally for user 'threepics'..."
+runuser -u threepics -- bash -c '
+  mkdir -p ~/.npm-global
+  npm config set prefix ~/.npm-global
+  export PATH="$HOME/.npm-global/bin:$PATH"
+  npm install -g serve
+'
+
+# Ensure serve is in ~/.bashrc
+if ! grep -q 'npm-global' "$BASHRC"; then
+  echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> "$BASHRC"
+fi
+
+echo "✅ serve installed globally"
+
+
+# 12. Setup Python backend
+if [ -d "$BACKEND_DIR" ]; then
+  echo "🐍 Setting up Python venv..."
+  cd "$BACKEND_DIR"
+  if [ -f "$BACKEND_DIR/package.json" ]; then
+    runuser -u threepics -- npm install
+  fi
+  python3 -m venv .venv
+  chown -R threepics:threepics .venv
+  runuser -u threepics -- bash -c "
+	source $BACKEND_DIR/.venv/bin/activate && \
+    pip install --upgrade pip && \
+    pip install -r $BACKEND_DIR/scripts/requirements.txt
+	deactivate
+  "
+else
+  echo "⚠️ Backend directory not found"
+fi
+
+# 13. Enable and reload services
+systemctl enable threepics-backend.service
+systemctl enable threepics-frontend.service
+systemctl enable getty@tty1.service
+systemctl daemon-reexec
+systemctl daemon-reload
+
+# Write current Git tag to .VERSION file
+cd /opt/threepics/threepics-dashboard
+CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
+echo "$CURRENT_TAG" > /opt/threepics/.VERSION
+chown threepics:threepics /opt/threepics/.VERSION
+chmod 644 /opt/threepics/.VERSION
+echo "📄 Version recorded: $CURRENT_TAG"
+
+# 14. Create user-friendly .vimrc
+if [ ! -f "$VIMRC" ]; then
+  cat << 'EOF' > "$VIMRC"
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set autoindent
+set smartindent
+syntax on
+set number
+EOF
+  chown threepics:threepics "$VIMRC"
+  echo "✅ .vimrc created"
+fi
+
+# 15. Create .bash_profile for startx autostart
+cat << 'EOF' > "$BASH_PROFILE"
+if [ -f ~/.bashrc ]; then
+  . ~/.bashrc
+fi
+
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+  startx
+fi
+EOF
+chown threepics:threepics "$BASH_PROFILE"
+echo "✅ .bash_profile created"
+
+# 16. Add useful aliases to .bashrc
+grep -q "alias restart-backend=" "$BASHRC" || cat << 'EOF' >> "$BASHRC"
+
+# === Useful Aliases ===
+alias ll='ls -lh --color=auto'
+alias cd-dashboard='cd /opt/threepics/threepics-dashboard && . backend/.venv/bin/activate'
+
+# Service restart
+alias restart-backend='sudo /bin/systemctl restart threepics-backend.service'
+alias restart-frontend='sudo /bin/systemctl restart threepics-frontend.service'
+alias restart-all='restart-backend && restart-frontend'
+
+# Logs
+alias logs-backend='sudo /bin/journalctl -u threepics-backend.service -n 50 --no-pager'
+alias logs-frontend='sudo /bin/journalctl -u threepics-frontend.service -n 50 --no-pager'
+alias logs-follow-backend='sudo /bin/journalctl -u threepics-backend.service -f'
+alias logs-follow-frontend='sudo /bin/journalctl -u threepics-frontend.service -f'
+
+cd /opt/threepics/threepics-dashboard/
+EOF
+chown threepics:threepics "$BASHRC"
+
+# 17. Setup cronjobs if not already present
+echo "📆 Configuring cronjobs..."
+CRONTAB_TMP=$(mktemp)
+crontab -u threepics -l 2>/dev/null > "$CRONTAB_TMP" || true
+
+# Nur hinzufügen, wenn update.sh noch nicht eingetragen ist
+if ! grep -q 'update.sh' "$CRONTAB_TMP"; then
+  echo "0 3 * * 0 /opt/threepics/threepics-dashboard/setup/update.sh 2>&1" >> "$CRONTAB_TMP"
+  crontab -u threepics "$CRONTAB_TMP"
+  echo "✅ Cronjob for update.sh added"
+else
+  echo "🔁 Cronjob for update.sh already exists – skipping"
+fi
+
+rm -f "$CRONTAB_TMP"
+
+echo "🎉 postinst script completed successfully at $(date)"
+exit 0

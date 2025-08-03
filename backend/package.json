@@ -1,0 +1,25 @@
+{
+  "name": "threepics-dashboard",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.4",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "chokidar": "^4.0.3",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.1",
+    "node-cron": "^4.1.1",
+    "node-fetch": "^3.3.2",
+    "react-simple-keyboard": "^3.8.88",
+    "ws": "^8.18.3"
+  }
+}
