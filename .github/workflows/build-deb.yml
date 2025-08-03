@@ -17,18 +17,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # wichtig: vollständige Git-Historie inkl. Tags
+          fetch-tags: true
 
       - name: Set Version
         run: |
+          # Hole letzten Git-Tag (z. B. v1.0.0), fallback auf 0.1.0
+          BASE_VERSION=$(git tag --sort=-creatordate | grep -E '^v?[0-9]+\.[0-9]+' | tail -n1 | sed 's/^v//' || echo "0.1.0")
+
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          TIMESTAMP=$(date +%Y%m%d%H%M)
+
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
             RAW_TAG="${GITHUB_REF#refs/tags/}"
             VERSION="${RAW_TAG#v}"  # entfernt führendes "v", falls vorhanden
           else
-            SHORT_SHA=$(git rev-parse --short HEAD)
-            VERSION="dev-${SHORT_SHA}"
+            VERSION="${BASE_VERSION}~dev-${TIMESTAMP}-${SHORT_SHA}"
           fi
+
+          echo "VERSION=$VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "BUILDROOT=$RUNNER_TEMP/${PACKAGE_NAME}_build" >> $GITHUB_ENV
+
 
       - name: Show Version
         run: echo "Building version ${{ env.VERSION }}"
@@ -40,9 +51,19 @@ jobs:
 
       - name: Prepare Build Directory
         run: |
-          mkdir -p "${{ env.BUILDROOT }}"
+          mkdir -p "${{ env.BUILDROOT }}/DEBIAN"
           cp -r setup/debian/* "${{ env.BUILDROOT }}/"
           mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}"
+
+          echo "Package: ${{ env.PACKAGE_NAME }}" > "${{ env.BUILDROOT }}/DEBIAN/control"
+          echo "Version: \${VERSION}" >> "${{ env.BUILDROOT }}/DEBIAN/control"
+          echo "Section: base" >> "${{ env.BUILDROOT }}/DEBIAN/control"
+          echo "Priority: optional" >> "${{ env.BUILDROOT }}/DEBIAN/control"
+          echo "Architecture: all" >> "${{ env.BUILDROOT }}/DEBIAN/control"
+          echo "Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji" >> "${{ env.BUILDROOT }}/DEBIAN/control"
+          echo "Maintainer: Björn Becker <bjoern.becker@mailbox.org>" >> "${{ env.BUILDROOT }}/DEBIAN/control"
+          echo "Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten." >> "${{ env.BUILDROOT }}/DEBIAN/control"
+
 
       - name: Fix Permissions
         run: |
@@ -73,11 +94,16 @@ jobs:
           cp -r frontend/dist "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend/"
           cp -r backend/* "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/backend/"
 
+      - name: Debug control file BEVOR sed
+        run: |
+          cat "${{ env.BUILDROOT }}/DEBIAN/control"
+
+
       - name: Replace VERSION in control file
         run: |
           sed -i "s/\${VERSION}/${{ env.VERSION }}/g" "${{ env.BUILDROOT }}/DEBIAN/control"
 
-      - name: Debug control file
+      - name: Debug control file AFTER
         run: |
           cat "${{ env.BUILDROOT }}/DEBIAN/control"
 
@@ -177,30 +203,26 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Generate unstable Packages.gz
-        if: github.ref == 'refs/heads/dev'
-        run: |
-          mkdir -p gh-pages/dists/unstable/main/binary-armhf
-          dpkg-scanpackages -m gh-pages/pool /dev/null > gh-pages/dists/unstable/main/binary-armhf/Packages
-          gzip -kf gh-pages/dists/unstable/main/binary-armhf/Packages
-
-      - name: Generate Release for unstable
-        if: github.ref == 'refs/heads/dev'
-        run: |
-          apt-ftparchive -c=release-unstable.conf release gh-pages/dists/unstable > gh-pages/dists/unstable/Release
-
-      - name: Sign unstable Release
-        if: github.ref == 'refs/heads/dev'
-        run: |
-          gpg --batch --yes --pinentry-mode loopback \
-               --passphrase-file pass.txt \
-               -abs -o gh-pages/dists/unstable/Release.gpg gh-pages/dists/unstable/Release
-
       - name: Copy .deb to gh-pages/pool/ (for dev)
         if: github.ref == 'refs/heads/dev'
         run: |
           mkdir -p gh-pages/pool/${{ env.PACKAGE_NAME }}
           cp ${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb gh-pages/pool/${{ env.PACKAGE_NAME }}/
+
+      - name: Generate unstable Packages.gz
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          cd gh-pages
+          mkdir -p dists/unstable/main/binary-armhf
+          dpkg-scanpackages -m pool /dev/null > dists/unstable/main/binary-armhf/Packages
+          gzip -kf dists/unstable/main/binary-armhf/Packages
+
+      - name: Generate Release for unstable
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          cd gh-pages
+          rm -f dists/unstable/Release
+          apt-ftparchive -c=release-unstable.conf release dists/unstable > dists/unstable/Release
 
       - name: Setup GPG for non-interactive use (dev)
         if: github.ref == 'refs/heads/dev'
@@ -219,6 +241,14 @@ jobs:
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 --decode > private.key
           gpg --batch --yes --import private.key
+
+      - name: Sign unstable Release
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          echo "${{ secrets.GPG_PASSPHRASE }}" > pass.txt
+          gpg --batch --yes --pinentry-mode loopback \
+               --passphrase-file pass.txt \
+               -abs -o gh-pages/dists/unstable/Release.gpg gh-pages/dists/unstable/Release
 
       - name: Commit and Push to gh-pages (dev)
         if: github.ref == 'refs/heads/dev'
