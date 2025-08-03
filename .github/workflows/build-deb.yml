@@ -72,6 +72,13 @@ jobs:
           cp -r frontend/dist "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend/"
           cp -r backend/* "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/backend/"
 
+      - name: Replace VERSION in control file
+        run: |
+          sed -i "s/\${VERSION}/${{ env.VERSION }}/g" "${{ env.BUILDROOT }}/DEBIAN/control"
+
+      - name: Debug control file
+        run: |
+          cat "${{ env.BUILDROOT }}/DEBIAN/control"
 
       - name: Build DEB
         run: |
