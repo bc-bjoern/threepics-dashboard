@@ -1,5 +1,3 @@
-// src/components/ClickZones.jsx
-
 import React from 'react';
 
 const ClickZones = ({ onPrev, onNext, onSettingsToggle }) => {
