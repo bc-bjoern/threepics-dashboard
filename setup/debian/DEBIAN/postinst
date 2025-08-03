@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e  # Exit on any error
-set -x
 
 LOGFILE="/var/log/threepics-postinst.log"
 exec >> "$LOGFILE" 2>&1
@@ -16,10 +15,17 @@ CONFIG_FILE="/etc/default/threepics-dashboard"
 VIMRC="/home/threepics/.vimrc"
 
 # 1. Fix permissions for critical system files
-chmod 440 /etc/sudoers.d/threepics
-chown root:root /etc/sudoers.d/threepics
-chown root:root /etc/systemd/system/threepics-frontend.service
-chown root:root /etc/systemd/system/threepics-backend.service
+if [ -f /etc/sudoers.d/threepics ]; then
+  chmod 440 /etc/sudoers.d/threepics
+  chown root:root /etc/sudoers.d/threepics
+fi
+
+if [ -f /etc/systemd/system/threepics-frontend.service ]; then
+  chown root:root /etc/systemd/system/threepics-frontend.service
+fi
+if [ -f /etc/systemd/system/threepics-backend.service ]; then
+  chown root:root /etc/systemd/system/threepics-backend.service
+fi
 
 # 2. Ensure 'threepics' user exists
 if ! id -u threepics &>/dev/null; then
@@ -132,14 +138,6 @@ systemctl enable threepics-frontend.service
 systemctl enable getty@tty1.service
 systemctl daemon-reexec
 systemctl daemon-reload
-
-# Write current Git tag to .VERSION file
-cd /opt/threepics/threepics-dashboard
-CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
-echo "$CURRENT_TAG" > /opt/threepics/.VERSION
-chown threepics:threepics /opt/threepics/.VERSION
-chmod 644 /opt/threepics/.VERSION
-echo "📄 Version recorded: $CURRENT_TAG"
 
 # 14. Create user-friendly .vimrc
 if [ ! -f "$VIMRC" ]; then

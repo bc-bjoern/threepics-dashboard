@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 // Language Loader
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,22 @@ function App() {
   const toggleSettings = () => {
     setSettingsOpen(prev => !prev);
   };
+
+  const [orientation, setOrientation] = useState("landscape");
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+
+  useEffect(() => {
+    axios.get(`${backendUrl}/api/setup`)
+      .then((response) => {
+        if (response.data?.orientation) {
+          setOrientation(response.data.orientation);
+        }
+      })
+      .catch((error) => {
+        console.error("❌ Fehler beim Laden der Setup-Daten:", error.message);
+      });
+  }, []);
+
 
   const {
     media,
@@ -55,6 +72,7 @@ function App() {
 
       <div
         style={{
+          transform: orientation === 'portrait' ? 'rotate(90deg)' : 'none',
           width: 'calc(100vw - 5vw)',
           display: 'flex',
           flexDirection: 'column',
