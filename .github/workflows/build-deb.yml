@@ -124,16 +124,11 @@ jobs:
           dpkg-scanpackages -m gh-pages/pool /dev/null > gh-pages/dists/stable/main/binary-armhf/Packages
           gzip -kf gh-pages/dists/stable/main/binary-armhf/Packages
 
-      - name: Generate Release
+      - name: Generate Release for stable
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          echo "Origin: Threepics" > gh-pages/dists/stable/Release
-          echo "Label: Threepics Repository" >> gh-pages/dists/stable/Release
-          echo "Suite: stable" >> gh-pages/dists/stable/Release
-          echo "Codename: stable" >> gh-pages/dists/stable/Release
-          echo "Architectures: armhf" >> gh-pages/dists/stable/Release
-          echo "Components: main" >> gh-pages/dists/stable/Release
-          echo "Description: Threepics Raspberry Pi Repo" >> gh-pages/dists/stable/Release
+          cd gh-pages
+          apt-ftparchive -c=release-stable.conf release dists/stable > dists/stable/Release
 
       - name: Setup GPG for non-interactive use
         if: startsWith(github.ref, 'refs/tags/')
