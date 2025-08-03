@@ -33,7 +33,7 @@ This has been tested on:
 - Debian 12
 - A touchscreen connected to the device
 
-### 🛠 Installation Steps
+### 🛠 Installation Steps via Debian Package
 
 1. Download the `.deb` package:
 
@@ -47,7 +47,7 @@ wget https://github.com/bc-bjoern/threepics-dashboard/releases/download/v1.0.0/t
 sudo dpkg -i threepics-dashboard_1.0.0.deb
 ```
 
-### Install Threepics Dashboard
+### Install Threepics Dashboard via Debian Repository 
 
 ```bash
 # Import public GPG key
