@@ -1,0 +1,19 @@
+[Unit]
+Description=Threepics Backend Server
+After=network.target
+
+[Service]
+Type=simple
+User=threepics
+WorkingDirectory=/opt/threepics/threepics-dashboard/backend
+ExecStartPre=/bin/rm -f /opt/threepics/threepics-dashboard/.reboot_required
+ExecStart=/usr/bin/node server.js
+Restart=always
+Environment=NODE_ENV=production
+StandardOutput=journal
+StandardError=inherit
+SyslogIdentifier=threepics-backend
+
+[Install]
+WantedBy=multi-user.target
+
