@@ -68,23 +68,25 @@ if [ -f "$CONFIG_FILE" ]; then
   source "$CONFIG_FILE"
 fi
 
-# 8. Create frontend .env file
-#if [ ! -d "$FRONTEND_DIR" ]; then
-#  echo "⚠️  Creating missing frontend directory: $FRONTEND_DIR"
-#  mkdir -p "$FRONTEND_DIR"
-#  chown threepics:threepics "$FRONTEND_DIR"
-#fi
-# Log-Inhalt prüfen
-ls -la "$FRONTEND_DIR" || echo "⚠️ frontend directory was not present during postinst"
+# Abbrechen, wenn frontend nicht da ist
+if [ ! -d "$FRONTEND_DIR" ]; then
+  echo "❌ $FRONTEND_DIR fehlt – Paketinstallation unvollständig. Breche ab."
+  exit 1
+fi
 
-cat > "$FRONTEND_DIR/.env" <<EOF
+# Nur schreiben, wenn frontend vorhanden
+if [ -d "$FRONTEND_DIR" ]; then
+  cat > "$FRONTEND_DIR/.env" <<EOF
 VITE_BACKEND_URL=http://localhost:3000
 VITE_WS_URL=ws://localhost:8081
 EOF
-
-chown threepics:threepics "$FRONTEND_DIR/.env"
-chmod 644 "$FRONTEND_DIR/.env"
-echo "✅ .env written to frontend"
+  chown threepics:threepics "$FRONTEND_DIR/.env"
+  chmod 644 "$FRONTEND_DIR/.env"
+  echo "✅ .env written to frontend"
+else
+  echo "❌ $FRONTEND_DIR fehlt – kann .env nicht schreiben"
+  exit 1
+fi
 
 # 9. Verify required tools
 for bin in python3 pip3; do
