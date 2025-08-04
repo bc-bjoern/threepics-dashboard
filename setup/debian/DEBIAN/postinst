@@ -233,6 +233,8 @@ else
     fi
 fi
 
+# plymouth > cmdline splash quiet plymouth.ignore-serial-consoles
+
 
 systemctl start threepics-backend.service
 systemctl start threepics-frontend.service
