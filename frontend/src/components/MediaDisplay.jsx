@@ -129,7 +129,6 @@ if (!currentMedia) return null;
         <video
           ref={videoRef}
           src={`${backendUrl}${currentMedia.url}`}
-          controls
           autoPlay
           muted
           style={{
