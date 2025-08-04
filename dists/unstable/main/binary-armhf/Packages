@@ -54,3 +54,17 @@ Section: base
 Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
 
+Package: threepics-dashboard
+Version: 1.0.1~dev-202508041858-d32b7df
+Architecture: all
+Maintainer: Björn Becker <bjoern.becker@mailbox.org>
+Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
+Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508041858-d32b7df.deb
+Size: 173372
+MD5sum: dc2f7aee729bc2d78902edb1426ddff1
+SHA1: 7b42ad3170d4e6df1813fc9bc1acde19938b79bf
+SHA256: c521f34a1359d235e9fee7e2d889442d6e66a754e5af38de319419e9e304dc88
+Section: base
+Priority: optional
+Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
+
