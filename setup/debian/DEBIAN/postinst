@@ -208,6 +208,32 @@ fi
 
 rm -f "$CRONTAB_TMP"
 
+
+# disable splash 
+CONFIG_FILE="/boot/firmware/config.txt"
+SETTING="disable_splash=1"
+
+# Prüfen, ob die Datei existiert
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Hinweis: Datei $CONFIG_FILE nicht vorhanden – Eintrag '$SETTING' wird übersprungen."
+    return 0 2>/dev/null || exit 0
+fi
+
+# Prüfen, ob der Eintrag bereits korrekt vorhanden ist
+if grep -q "^${SETTING}$" "$CONFIG_FILE"; then
+    echo "Eintrag bereits vorhanden: $SETTING"
+else
+    # Vorhandenen Eintrag ersetzen oder neu einfügen
+    if grep -q "^disable_splash=" "$CONFIG_FILE"; then
+        sed -i "s/^disable_splash=.*/$SETTING/" "$CONFIG_FILE"
+        echo "Eintrag aktualisiert: $SETTING"
+    else
+        echo "$SETTING" >> "$CONFIG_FILE"
+        echo "Eintrag hinzugefügt: $SETTING"
+    fi
+fi
+
+
 systemctl start threepics-backend.service
 systemctl start threepics-frontend.service
 
