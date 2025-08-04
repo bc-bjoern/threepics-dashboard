@@ -3,8 +3,7 @@ Window.SetBackgroundTopColor(0.1, 0.1, 0.1);
 Window.SetBackgroundBottomColor(0.0, 0.0, 0.0);
 
 # Logo in der Mitte
-#logo.image = Image("logo.png");
-logo.image = Image("logo.png").Scale(logo.image.GetWidth() * 0.6, logo.image.GetHeight() * 0.6);
+logo.image = Image("logo.png");
 logo.sprite = Sprite(logo.image);
 logo.opacity_angle = 0;
 
