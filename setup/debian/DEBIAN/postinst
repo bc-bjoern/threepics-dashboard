@@ -69,11 +69,11 @@ if [ -f "$CONFIG_FILE" ]; then
 fi
 
 # 8. Create frontend .env file
-if [ ! -d "$FRONTEND_DIR" ]; then
-  echo "⚠️  Creating missing frontend directory: $FRONTEND_DIR"
-  mkdir -p "$FRONTEND_DIR"
-  chown threepics:threepics "$FRONTEND_DIR"
-fi
+#if [ ! -d "$FRONTEND_DIR" ]; then
+#  echo "⚠️  Creating missing frontend directory: $FRONTEND_DIR"
+#  mkdir -p "$FRONTEND_DIR"
+#  chown threepics:threepics "$FRONTEND_DIR"
+#fi
 # Log-Inhalt prüfen
 ls -la "$FRONTEND_DIR" || echo "⚠️ frontend directory was not present during postinst"
 
