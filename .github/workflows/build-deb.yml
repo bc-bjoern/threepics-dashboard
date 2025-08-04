@@ -54,11 +54,6 @@ jobs:
             exit 1
           fi
 
-      - name: Ensure frontend folder exists in .deb structure
-        run: |
-          mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend"
-          touch "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend/.keep"
-
       - name: Prepare Build Directory
         run: |
           mkdir -p "${{ env.BUILDROOT }}/DEBIAN"
@@ -100,7 +95,7 @@ jobs:
       - name: Copy full source (backend + frontend + dist) to .deb structure
         run: |
           mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend"
-          cp -r frontend/dist "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend/"
+          cp -r frontend/dist/* "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/frontend/"
           mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/backend"
           rsync -a backend/ "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/backend/"
 
