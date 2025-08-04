@@ -208,5 +208,8 @@ fi
 
 rm -f "$CRONTAB_TMP"
 
+systemctl start threepics-backend.service
+systemctl start threepics-frontend.service
+
 echo "🎉 postinst script completed successfully at $(date)"
 exit 0
