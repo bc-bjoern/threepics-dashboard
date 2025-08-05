@@ -69,9 +69,19 @@ if [ -f "$CONFIG_FILE" ]; then
   source "$CONFIG_FILE"
 fi
 
-# Abbrechen, wenn frontend nicht da ist
+FRONTEND_DIR="/opt/threepics/threepics-dashboard/frontend"
+
+# Sicherheit: prüfe und warte kurz, ob frontend da ist
+for i in {1..5}; do
+  if [ -d "$FRONTEND_DIR" ]; then
+    break
+  fi
+  echo "⏳ Warten auf $FRONTEND_DIR (Versuch $i)..."
+  sleep 0.5
+done
+
 if [ ! -d "$FRONTEND_DIR" ]; then
-  echo "❌ $FRONTEND_DIR fehlt – Paketinstallation unvollständig. Breche ab."
+  echo "❌ $FRONTEND_DIR fehlt – Entpacken schlug fehl oder wurde vorher gelöscht."
   exit 1
 fi
 
