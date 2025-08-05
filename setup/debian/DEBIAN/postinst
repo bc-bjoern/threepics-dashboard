@@ -99,6 +99,29 @@ touch "$BASHRC"
 chown threepics:threepics "$BASHRC"
 chmod 644 "$BASHRC"
 
+CONFIG_DIR="/opt/threepics/threepics-dashboard/backend/config"
+SETUP_FILE="$CONFIG_DIR/setup.json"
+
+mkdir -p "$CONFIG_DIR"
+chown threepics:threepics "$CONFIG_DIR"
+
+if [ ! -f "$SETUP_FILE" ]; then
+    cat > "$SETUP_FILE" <<EOF
+{
+  "delay_seconds": 20,
+  "language": "en",
+  "sync_interval": 120,
+  "transition_effect": "none",
+  "transition_duration": "1.0",
+  "orientation": "landscape"
+}
+EOF
+    chown threepics:threepics "$SETUP_FILE"
+    echo "✅ setup.json mit Defaults erstellt"
+else
+    echo "✅ setup.json existiert bereits – wird nicht überschrieben"
+fi
+
 # 12b. Install serve globally for threepics user
 echo "📦 Installing serve globally for user 'threepics'..."
 runuser -u threepics -- bash -c '
