@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e  # Exit on any error
+set -x
 
 LOGFILE="/var/log/threepics-postinst.log"
 exec >> "$LOGFILE" 2>&1
