@@ -60,7 +60,6 @@ chown threepics:threepics "$XINITRC"
 echo "✅ .xinitrc created"
 
 # 5. Create /opt/threepics and assign ownership
-mkdir -p /opt/threepics
 chown threepics:threepics /opt/threepics
 chown threepics:threepics "$XINITRC"
 
@@ -268,6 +267,23 @@ else
 fi
 
 # plymouth > cmdline splash quiet plymouth.ignore-serial-consoles
+PLYMOUTH_CONF="/etc/plymouth/plymouthd.conf"
+DESIRED_THEME="threepics"
+
+if [ -f "$PLYMOUTH_CONF" ]; then
+  CURRENT_THEME=$(grep '^Theme=' "$PLYMOUTH_CONF" | cut -d'=' -f2)
+else
+  CURRENT_THEME=""
+fi
+
+if [ "$CURRENT_THEME" != "$DESIRED_THEME" ]; then
+  echo "🖼️ Aktiviere Plymouth-Theme '$DESIRED_THEME'..."
+  plymouth-set-default-theme -R "$DESIRED_THEME"
+  echo "✅ Plymouth-Theme gesetzt auf $DESIRED_THEME"
+else
+  echo "✅ Plymouth-Theme '$DESIRED_THEME' ist bereits aktiv"
+fi
+
 
 
 systemctl start threepics-backend.service
