@@ -12,7 +12,6 @@ BACKEND_DIR="/opt/threepics/threepics-dashboard/backend"
 BASHRC="/home/threepics/.bashrc"
 BASH_PROFILE="/home/threepics/.bash_profile"
 XINITRC="/home/threepics/.xinitrc"
-CONFIG_FILE="/etc/default/threepics-dashboard"
 VIMRC="/home/threepics/.vimrc"
 
 # 1. Fix permissions for critical system files
@@ -60,24 +59,8 @@ chown threepics:threepics "$XINITRC"
 echo "✅ .xinitrc created"
 
 # 5. Create /opt/threepics and assign ownership
-chown threepics:threepics /opt/threepics
 chown threepics:threepics "$XINITRC"
 
-# 6. Load Git URL from config or use default
-if [ -f "$CONFIG_FILE" ]; then
-  source "$CONFIG_FILE"
-fi
-
-FRONTEND_DIR="/opt/threepics/threepics-dashboard/frontend"
-
-# Sicherheit: prüfe und warte kurz, ob frontend da ist
-for i in {1..5}; do
-  if [ -d "$FRONTEND_DIR" ]; then
-    break
-  fi
-  echo "⏳ Warten auf $FRONTEND_DIR (Versuch $i)..."
-  sleep 0.5
-done
 
 if [ ! -d "$FRONTEND_DIR" ]; then
   echo "❌ $FRONTEND_DIR fehlt – Entpacken schlug fehl oder wurde vorher gelöscht."
