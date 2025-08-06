@@ -5,13 +5,6 @@ set -x
 LOGFILE="/var/log/threepics-postinst.log"
 exec >> "$LOGFILE" 2>&1
 
-echo "🚨 PRECHECK /opt Inhalt:" >> "$LOGFILE"
-ls -lR /opt >> "$LOGFILE"
-
-find /opt >> "$LOGFILE"
-
-
-
 echo "➡ postinst started at $(date)"
 
 FRONTEND_DIR="/opt/threepics/threepics-dashboard/frontend"

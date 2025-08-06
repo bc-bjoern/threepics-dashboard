@@ -105,23 +105,9 @@ jobs:
           mkdir -p "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/backend"
           rsync -a backend/ "${{ env.BUILDROOT }}/opt/${{ env.PROJECT_NAME }}/${{ env.PACKAGE_NAME }}/backend/"
 
-
-      - name: Debug control file BEVOR sed
-        run: |
-          cat "${{ env.BUILDROOT }}/DEBIAN/control"
-
-
       - name: Replace VERSION in control file
         run: |
           sed -i "s/\${VERSION}/${{ env.VERSION }}/g" "${{ env.BUILDROOT }}/DEBIAN/control"
-
-      - name: Debug control file AFTER
-        run: |
-          cat "${{ env.BUILDROOT }}/DEBIAN/control"
-
-      - name: Debug build directory before packaging
-        run: |
-          tree -a "${{ env.BUILDROOT }}"
 
       - name: Build DEB
         run: |
