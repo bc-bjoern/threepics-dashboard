@@ -73,11 +73,13 @@ jobs:
 
       - name: Fix Permissions
         run: |
-          chmod -R 0755 "${{ env.BUILDROOT }}/DEBIAN"
           chmod 440 "$BUILDROOT/etc/sudoers.d/threepics"
           find "${{ env.BUILDROOT }}" -type d -exec chmod 755 {} \;
           find "${{ env.BUILDROOT }}" -type f -exec chmod 644 {} \;
           chmod +x "${{ env.BUILDROOT }}/build-deb.sh" || true
+          chmod -R 755 "${{ env.BUILDROOT }}/DEBIAN"
+          chmod 644 "${{ env.BUILDROOT }}/DEBIAN/control"
+          chmod 440 "${{ env.BUILDROOT }}/etc/sudoers.d/threepics"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
