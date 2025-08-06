@@ -14,6 +14,11 @@ BASH_PROFILE="/home/threepics/.bash_profile"
 XINITRC="/home/threepics/.xinitrc"
 VIMRC="/home/threepics/.vimrc"
 
+if [ ! -d "$FRONTEND_DIR" ]; then
+  echo "❌ $FRONTEND_DIR fehlt – Entpacken schlug fehl oder wurde vorher gelöscht."
+  exit 1
+fi
+
 if [ -d /opt/threepics/threepics-dashboard ]; then
   echo "🛠 Fixing ownership of /opt/threepics/threepics-dashboard"
   chown -R threepics:threepics /opt/threepics/threepics-dashboard
@@ -66,11 +71,6 @@ echo "✅ .xinitrc created"
 # 5. Create /opt/threepics and assign ownership
 chown threepics:threepics "$XINITRC"
 
-
-if [ ! -d "$FRONTEND_DIR" ]; then
-  echo "❌ $FRONTEND_DIR fehlt – Entpacken schlug fehl oder wurde vorher gelöscht."
-  exit 1
-fi
 
 # Nur schreiben, wenn frontend vorhanden
 if [ -d "$FRONTEND_DIR" ]; then
@@ -191,7 +191,7 @@ EOF
 chown threepics:threepics "$BASH_PROFILE"
 echo "✅ .bash_profile created"
 
-# 16. Add useful aliases to .bashrc
+# 16. Add useful aliase to .bashrc
 grep -q "alias restart-backend=" "$BASHRC" || cat << 'EOF' >> "$BASHRC"
 
 # === Useful Aliases ===
