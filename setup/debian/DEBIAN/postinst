@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e  # Exit on any error
-set -x
 
 LOGFILE="/var/log/threepics-postinst.log"
 exec >> "$LOGFILE" 2>&1
@@ -110,7 +109,8 @@ if [ ! -f "$SETUP_FILE" ]; then
   "sync_interval": 120,
   "transition_effect": "none",
   "transition_duration": "1.0",
-  "orientation": "landscape"
+  "orientation": "landscape",
+  "auto_update_enabled": false
 }
 EOF
     chown threepics:threepics "$SETUP_FILE"
@@ -218,15 +218,15 @@ echo "📆 Configuring cronjobs..."
 CRONTAB_TMP=$(mktemp)
 crontab -u threepics -l 2>/dev/null > "$CRONTAB_TMP" || true
 
-# Nur hinzufügen, wenn update.sh noch nicht eingetragen ist
-chown threepics:threepics /usr/local/bin/threepics_update.sh
-chmod u+x /usr/local/bin/threepics_update.sh
-if ! grep -q 'threepics_update.sh' "$CRONTAB_TMP"; then
-  echo "0 3 * * 0 /usr/local/bin/threepics_update.sh 2>&1" >> "$CRONTAB_TMP"
+# Nur hinzufügen, wenn update.py noch nicht eingetragen ist
+chown threepics:threepics /usr/local/bin/threepics_update.py
+chmod u+x /usr/local/bin/threepics_update.py
+if ! grep -q 'threepics_update.py' "$CRONTAB_TMP"; then
+  echo "0 3 * * 0 /usr/local/bin/threepics_update.py 2>&1" >> "$CRONTAB_TMP"
   crontab -u threepics "$CRONTAB_TMP"
-  echo "✅ Cronjob for update.sh added"
+  echo "✅ Cronjob for update.py added"
 else
-  echo "🔁 Cronjob for update.sh already exists – skipping"
+  echo "🔁 Cronjob for update.py already exists – skipping"
 fi
 
 rm -f "$CRONTAB_TMP"
