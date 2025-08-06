@@ -39,12 +39,9 @@ from pathlib import Path
 PACKAGE = "threepics-dashboard"
 SETUP_JSON = "/opt/threepics/threepics-dashboard/backend/config/setup.json"
 MARKER_FILE = "/opt/threepics/threepics-dashboard/.deb_update_available"
-LOGFILE = "/opt/threepics/threepics-dashboard/threepics-autoupdate.log"
 
 # === LOGGING CONFIGURATION ===
 logging.basicConfig(
-    filename=LOGFILE,
-    filemode="a",
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"

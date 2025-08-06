@@ -159,8 +159,10 @@ fi
 systemctl enable threepics-backend.service
 systemctl enable threepics-frontend.service
 systemctl enable getty@tty1.service
+systemctl enable threepics-update.timer
 systemctl daemon-reexec
 systemctl daemon-reload
+systemctl start threepics-update.timer
 
 # 14. Create user-friendly .vimrc
 if [ ! -f "$VIMRC" ]; then
@@ -221,16 +223,6 @@ crontab -u threepics -l 2>/dev/null > "$CRONTAB_TMP" || true
 # Nur hinzufügen, wenn update.py noch nicht eingetragen ist
 chown threepics:threepics /usr/local/bin/threepics_update.py
 chmod u+x /usr/local/bin/threepics_update.py
-if ! grep -q 'threepics_update.py' "$CRONTAB_TMP"; then
-  echo "0 3 * * 0 /usr/local/bin/threepics_update.py 2>&1" >> "$CRONTAB_TMP"
-  crontab -u threepics "$CRONTAB_TMP"
-  echo "✅ Cronjob for update.py added"
-else
-  echo "🔁 Cronjob for update.py already exists – skipping"
-fi
-
-rm -f "$CRONTAB_TMP"
-
 
 # disable splash 
 CONFIG_FILE="/boot/firmware/config.txt"
