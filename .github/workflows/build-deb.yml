@@ -202,11 +202,6 @@ jobs:
           git commit -m "Publish ${{ env.PACKAGE_NAME }} ${{ env.VERSION }}"
           git push origin gh-pages
 
-      - name: Cleanup keep only last 3 dev .deb files
-        if: github.ref == 'refs/heads/dev'
-        run: |
-          cd gh-pages/pool/${{ env.PACKAGE_NAME }}
-          ls -1t *.deb | tail -n +4 | xargs -r rm --
 
       - name: Checkout gh-pages branch (for dev)
         if: github.ref == 'refs/heads/dev'
@@ -214,6 +209,12 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
+
+      - name: Cleanup keep only last 3 dev .deb files
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          cd gh-pages/pool/${{ env.PACKAGE_NAME }}
+          ls -1t *.deb | tail -n +4 | xargs -r rm --
 
       - name: Copy .deb to gh-pages/pool/ (for dev)
         if: github.ref == 'refs/heads/dev'
