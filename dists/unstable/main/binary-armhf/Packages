@@ -13,20 +13,6 @@ Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
 
 Package: threepics-dashboard
-Version: 1.0.35~dev-202508062001-c1f937f
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji, plymouth, plymouth-themes
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.35~dev-202508062001-c1f937f.deb
-Size: 330684
-MD5sum: 03c9084a60f2f7f9f911b263d9db5c91
-SHA1: f9e2f5db59a8e2bb108f8629983024553ef28fde
-SHA256: 1a6a7410518390b3ad5a83f68de7de004ed609851834c9e527d439b397a08e68
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
 Version: 1.0.36~dev-202508062005-08a0ca9
 Architecture: all
 Maintainer: Björn Becker <bjoern.becker@mailbox.org>
@@ -50,6 +36,20 @@ Size: 330716
 MD5sum: 27a10b4824cc4a75a3b2801de86b2cbb
 SHA1: fe55baa128830c85f511c27ca28a6564ecf472fa
 SHA256: ae80cbe83da0d85d58c826a2107a83e4a904773df7195cf1953c5bd27781ab26
+Section: base
+Priority: optional
+Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
+
+Package: threepics-dashboard
+Version: 1.0.38~dev-202508062019-7da5090
+Architecture: all
+Maintainer: Björn Becker <bjoern.becker@mailbox.org>
+Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji, plymouth, plymouth-themes
+Filename: pool/threepics-dashboard/threepics-dashboard_1.0.38~dev-202508062019-7da5090.deb
+Size: 330724
+MD5sum: 42bd736062de6982439877c09d3ac1ec
+SHA1: 38260a2affd91b5976ff1fa65d80c8c747120e5f
+SHA256: e69b918480e368a5d7411a2047705adaad77933cb8dc135a0286e10bd707f517
 Section: base
 Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
