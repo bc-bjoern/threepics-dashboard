@@ -75,6 +75,9 @@ jobs:
         run: |
           chmod -R 0755 "${{ env.BUILDROOT }}/DEBIAN"
           chmod 440 "$BUILDROOT/etc/sudoers.d/threepics"
+          find "${{ env.BUILDROOT }}" -type d -exec chmod 755 {} \;
+          find "${{ env.BUILDROOT }}" -type f -exec chmod 644 {} \;
+          chmod +x "${{ env.BUILDROOT }}/build-deb.sh" || true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -120,7 +123,7 @@ jobs:
 
       - name: Build DEB
         run: |
-          dpkg-deb --build "${{ env.BUILDROOT }}" "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb"
+          dpkg-deb --build --root-owner-group "${{ env.BUILDROOT }}" "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb"
 
       - name: List Artifacts
         run: ls -lh "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb"
