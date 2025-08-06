@@ -114,6 +114,10 @@ jobs:
         run: |
           cat "${{ env.BUILDROOT }}/DEBIAN/control"
 
+      - name: Debug build directory before packaging
+        run: |
+          tree -a "${{ env.BUILDROOT }}"
+
       - name: Build DEB
         run: |
           dpkg-deb --build "${{ env.BUILDROOT }}" "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb"
