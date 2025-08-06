@@ -111,7 +111,7 @@ jobs:
 
       - name: Build DEB
         run: |
-          dpkg-deb --build --root-owner-group "${{ env.BUILDROOT }}" "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb"
+          dpkg-deb --build "${{ env.BUILDROOT }}" "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb"
 
       - name: List Artifacts
         run: ls -lh "${{ env.PACKAGE_NAME }}_${{ env.VERSION }}.deb"

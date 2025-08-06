@@ -14,6 +14,11 @@ BASH_PROFILE="/home/threepics/.bash_profile"
 XINITRC="/home/threepics/.xinitrc"
 VIMRC="/home/threepics/.vimrc"
 
+if [ -d /opt/threepics/threepics-dashboard ]; then
+  echo "🛠 Fixing ownership of /opt/threepics/threepics-dashboard"
+  chown -R threepics:threepics /opt/threepics/threepics-dashboard
+fi
+
 # 1. Fix permissions for critical system files
 if [ -f /etc/sudoers.d/threepics ]; then
   chmod 440 /etc/sudoers.d/threepics
