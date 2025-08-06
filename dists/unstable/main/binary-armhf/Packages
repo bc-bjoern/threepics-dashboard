@@ -13,20 +13,6 @@ Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
 
 Package: threepics-dashboard
-Version: 1.0.1~dev-202508052215-993b073
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508052215-993b073.deb
-Size: 330430
-MD5sum: 5f505bb782e25ef034ce6448480c0a0a
-SHA1: 9702c9e2c037356528dc0b39f02cb4feb6d564ee
-SHA256: 8be6dc721f310dab111941c7f0b44457077d1059a0fb3e1077a2440ddc055740
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
 Version: 1.0.1~dev-202508061856-b40ba26
 Architecture: all
 Maintainer: Björn Becker <bjoern.becker@mailbox.org>
@@ -50,6 +36,20 @@ Size: 330376
 MD5sum: 09a0da48f22cf24e70bb2c05352b0247
 SHA1: 635d7d4afcdd3bc64e7b9009c2a1642dbd16fe84
 SHA256: 28eb9e70148e429889cd8b675cf3f8927dfc72e4fe3ccdfef8b677770c1aec72
+Section: base
+Priority: optional
+Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
+
+Package: threepics-dashboard
+Version: 1.0.30~dev-202508061917-3c86dac
+Architecture: all
+Maintainer: Björn Becker <bjoern.becker@mailbox.org>
+Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji, plymouth, plymouth-themes
+Filename: pool/threepics-dashboard/threepics-dashboard_1.0.30~dev-202508061917-3c86dac.deb
+Size: 330370
+MD5sum: 92fc0f44af840cab8de2c8644830e287
+SHA1: 3421409afbe6df5a7e4440e5938a864caa7af42e
+SHA256: cd7158a5da909469ad816cb484977333230f93ab02a0b7ef3d8143cfe1218108
 Section: base
 Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
