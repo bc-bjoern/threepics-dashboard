@@ -272,8 +272,6 @@ else
   echo "✅ Plymouth-Theme '$DESIRED_THEME' ist bereits aktiv"
 fi
 
-
-
 systemctl start threepics-backend.service
 systemctl start threepics-frontend.service
 
