@@ -1,200 +1,4 @@
 Package: threepics-dashboard
-Version: 1.0.0
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.0.deb
-Size: 173256
-MD5sum: 012b89a192444c7bab9698b01a81b64a
-SHA1: 7f988905380ff85e0ac18f51003439828d7e33a1
-SHA256: a41876200135e116cc51b9618edf9e0e06b7982eba12ff995046df649decc3e2
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508031943-5b3f6cb
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508031943-5b3f6cb.deb
-Size: 173284
-MD5sum: 316737a13366c0a02160bae2fc725c05
-SHA1: 04c369973b4d7838ec1c7844189ff12cc69f13df
-SHA256: cb3e3b9cc3144a6a19b3c5fbe36f1ea4c7f206b31cae08ab8a73341df51dc678
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508031946-5d35d2b
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508031946-5d35d2b.deb
-Size: 173290
-MD5sum: ae0511bfd653d3fbbb40bfffd16f0517
-SHA1: 5719ca3e327242c6a7dcef708cbf8bec2ed8cd35
-SHA256: f886c176121cb61e3b14a859c1358c9c7540dd7bd85c1fa5defe16d77a246ecb
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508041830-f920e8c
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508041830-f920e8c.deb
-Size: 173366
-MD5sum: d85c96eae6bfab3e3017b593e727c06b
-SHA1: 96940b68fed57e9ea95dde908b193f0d2c7f4bd4
-SHA256: 70f0bd73c9ece3a9519f2062d5b99ea872ee891a6e65f970f14e8f524f5f07cd
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508041858-d32b7df
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508041858-d32b7df.deb
-Size: 173372
-MD5sum: dc2f7aee729bc2d78902edb1426ddff1
-SHA1: 7b42ad3170d4e6df1813fc9bc1acde19938b79bf
-SHA256: c521f34a1359d235e9fee7e2d889442d6e66a754e5af38de319419e9e304dc88
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508041912-34bc920
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508041912-34bc920.deb
-Size: 173382
-MD5sum: d0285baac26b35276651bf4f41f5ec18
-SHA1: 30a892235419235461906bcffe177b636a031b81
-SHA256: c233cdf46c0a3c1e41431aa3722ae8da7f7bb621b2a676ede781241c2474b530
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508041924-2d562a8
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508041924-2d562a8.deb
-Size: 173386
-MD5sum: 5a8ffe9210299380f581fc87b4bd5ae4
-SHA1: 27ca5b84f315d0d8ed882a213cc9371e01612b0e
-SHA256: e1b2cb990bdd7e2cc91e8b66765354b6e25e59c9e12979343e825c08c519d874
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508041943-d763ebc
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508041943-d763ebc.deb
-Size: 173324
-MD5sum: 4b675ab410fcf3efbf4eab818cb061c7
-SHA1: 4799133f36f4cdabeccacc361b9de317fd98a2bb
-SHA256: acd4bacb4c76a3e0a94dc8c10f80ff40d04d4a9672d5b0bf9cce6fee366ad405
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508041951-782bad9
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508041951-782bad9.deb
-Size: 173346
-MD5sum: e97804725863af31357c1a9f258a9169
-SHA1: c3c63613103e94def3104ac735c02c6b3511927a
-SHA256: 5a52bc9ad07f3ce22b30e9ac2b02f80f1a28bb6aa65a7f7d33c528575c4476e3
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508042111-62d344f
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508042111-62d344f.deb
-Size: 173618
-MD5sum: 69d276c1ca2dbc864dda404f4712d27c
-SHA1: 5ae306aa868adb801701e6f1038241677fdef780
-SHA256: 46e9d787d6a3c6119bf20299f68f597bb3da0df9bf6e07acc0d9ed5baf1fd463
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508042142-fdb9a16
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508042142-fdb9a16.deb
-Size: 398646
-MD5sum: 2bd8dfc8b69b2b2d3c3daf0f8a71992e
-SHA1: 341fd6a8e5c7e00c136a1a3a4eb765a46873b9d7
-SHA256: bb8ac05d006fd88eadc4b486e397fe0a908d869eebe62f2a0f9854849336f668
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508042143-a2b4d48
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508042143-a2b4d48.deb
-Size: 398644
-MD5sum: dfad55e0116242c74b15f953e387b932
-SHA1: c924148c874696a1711c665b98a6fbee226622f8
-SHA256: a08d102bae0023012cc7a73caefff444a40ae7bc46933bcea1783868e4527d3c
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508052118-58935c8
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508052118-58935c8.deb
-Size: 398648
-MD5sum: aadc9accdec169dffd40ab268a52bfd4
-SHA1: 9ed9e519a7024685bc6dccf9584aecca7e9a801e
-SHA256: fb1d0422703898ea2b95db3a64562e82ee250cb5e975afdea0515a53465bdcf9
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508052136-b51305e
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508052136-b51305e.deb
-Size: 398644
-MD5sum: c769ff51d9ed0d35a395c1b8e86787c0
-SHA1: 9ed35304f7cc467219b4eb4a140f84e0f934925f
-SHA256: 481af3b72c8b125af0d10ca2a59e045e618bb89216bd0d5094e803b1969b88cc
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
 Version: 1.0.1~dev-202508052141-ebf26f5
 Architecture: all
 Maintainer: Björn Becker <bjoern.becker@mailbox.org>
@@ -204,20 +8,6 @@ Size: 398730
 MD5sum: faecec58111d65bac1922a6c6d2a8038
 SHA1: b3abccca13942bc433a646660872ca83d4b0539d
 SHA256: 727fc593a96f1d6be36bb860525e3ff1f4998cc7b25e1f9b2276aeaaf8332466
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
-Version: 1.0.1~dev-202508052147-028ce35
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508052147-028ce35.deb
-Size: 330674
-MD5sum: 3a9e7ed1998e3b952a3268426c078c82
-SHA1: ab55a60edd2be5e78e50fbe134faff14a5596a48
-SHA256: 52ef4fce69cf61f2a66ae14132b95a24bd47f87dabebb789445bed7d9aae526f
 Section: base
 Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
@@ -246,6 +36,20 @@ Size: 330430
 MD5sum: 5f505bb782e25ef034ce6448480c0a0a
 SHA1: 9702c9e2c037356528dc0b39f02cb4feb6d564ee
 SHA256: 8be6dc721f310dab111941c7f0b44457077d1059a0fb3e1077a2440ddc055740
+Section: base
+Priority: optional
+Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
+
+Package: threepics-dashboard
+Version: 1.0.1~dev-202508061856-b40ba26
+Architecture: all
+Maintainer: Björn Becker <bjoern.becker@mailbox.org>
+Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji, plymouth, plymouth-themes
+Filename: pool/threepics-dashboard/threepics-dashboard_1.0.1~dev-202508061856-b40ba26.deb
+Size: 330336
+MD5sum: 26f57addf61be4ba6a12bddf90817540
+SHA1: feb2bc6689c3e27d85873736b01791ca0a8abe09
+SHA256: 3b056b6903132964c330669d3403f7dfbea64fc772fa740ce66b4704126b6fca
 Section: base
 Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
