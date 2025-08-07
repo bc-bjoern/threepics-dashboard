@@ -128,6 +128,17 @@ def main():
     if mount_device(device, mountpoint):
         copy_images(Path(mountpoint), Path(target_dir))
         unmount_device(mountpoint)
+
+        # After successful copy, trigger upload script
+        try:
+            print("[UPLOAD] Running put_files.py...")
+            subprocess.run(
+                [sys.executable, "/opt/threepics/threepics-dashboard/backend/scripts/put_files.py"],
+                check=True
+            )
+            print("[UPLOAD] Upload script completed successfully.")
+        except subprocess.CalledProcessError as upload_error:
+            print(f"[ERROR] Upload script failed: {upload_error}")
     else:
         print(f"[ABORT] Could not mount {device}")
 
