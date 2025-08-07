@@ -49,6 +49,8 @@ Exit Codes:
 import sys
 import os
 import json
+import tempfile
+import shutil
 
 API_BASE_URL = "https://three-pics.com/api"
 OAUTH2_TOKEN_URL = "https://three-pics.com/o/token/"
@@ -234,11 +236,23 @@ def download_file(access_token, url, save_path):
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(url, headers=headers, stream=True)
     response.raise_for_status()
+
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
-    with open(save_path, "wb") as file_handle:
+
+    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+        tmp_path = tmp_file.name
+        total_bytes = 0
         for chunk in response.iter_content(chunk_size=8192):
-            file_handle.write(chunk)
-    print(f"✅ Heruntergeladen: {save_path}")
+            if chunk:  # Skip keep-alive chunks
+                tmp_file.write(chunk)
+                total_bytes += len(chunk)
+
+    if total_bytes == 0:
+        print(f"⚠️  Datei hat 0 Bytes, wird verworfen: {url}")
+        os.remove(tmp_path)
+    else:
+        shutil.move(tmp_path, save_path)
+        print(f"✅ Heruntergeladen: {save_path}")
 
 
 def save_text_item(text, save_path, telegram_meta=None):

@@ -138,6 +138,11 @@ echo "✅ serve installed globally"
 
 # 12. Setup Python backend
 if [ -d "$BACKEND_DIR" ]; then
+  if [ ! -d "$BACKEND_DIR/uploads" ];
+  then
+    mkdir "$BACKEND_DIR/uploads"
+  fi 
+
   echo "🐍 Setting up Python venv..."
   cd "$BACKEND_DIR"
   if [ -f "$BACKEND_DIR/package.json" ]; then
@@ -221,8 +226,10 @@ CRONTAB_TMP=$(mktemp)
 crontab -u threepics -l 2>/dev/null > "$CRONTAB_TMP" || true
 
 # Nur hinzufügen, wenn update.py noch nicht eingetragen ist
-chown threepics:threepics /usr/local/bin/threepics_update.py
+chown root:threepics /usr/local/bin/threepics_update.py
+chown root:threepics /usr/local/bin/threepics_usbcopy.py
 chmod u+x /usr/local/bin/threepics_update.py
+chmod u+x /usr/local/bin/threepics_usbcopy.py
 
 # disable splash 
 CONFIG_FILE="/boot/firmware/config.txt"
