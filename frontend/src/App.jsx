@@ -63,23 +63,11 @@ function App() {
   return (
     <>
       <LanguageLoader />
-      <div
-        className="app-wrapper"
-        style={{
-          transform: orientation === 'portrait' ? 'rotate(90deg)' : 'none',
-          transformOrigin: 'center center',
-          width: '100vw',
-          height: '100vh',
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-      >
       {/* Click Zones ganz oben */}
       <ClickZones
         onPrev={handlePrev}
         onNext={handleNext}
         onSettingsToggle={toggleSettings}
-        orientation={orientation}
       />
 
       <div
@@ -129,7 +117,6 @@ function App() {
           settingsMenu={settingsMenu}
           setSettingsMenu={setSettingsMenu}
         />
-      </div>
       </div>
     </>
   );
