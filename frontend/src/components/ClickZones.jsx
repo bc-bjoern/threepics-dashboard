@@ -1,6 +1,7 @@
 import React from 'react';
 
-const ClickZones = ({ onPrev, onNext, onSettingsToggle }) => {
+const ClickZones = ({ onPrev, onNext, onSettingsToggle, orientation }) => {
+  const isPortrait = orientation === 'portrait';
   return (
     <>
       {/* Top center area for opening settings */}
@@ -8,13 +9,14 @@ const ClickZones = ({ onPrev, onNext, onSettingsToggle }) => {
         onClick={onSettingsToggle}
         style={{
           position: 'fixed',
-          top: 0,
-          left: '35vw',
-          width: '30vw',
-          height: '10vh',
+          top: isPortrait ? '35vh' : 0,
+          left: isPortrait ? 0 : '35vw',
+          width: isPortrait ? '10vw' : '30vw',
+          height: isPortrait ? '30vh' : '10vh',
           cursor: 'pointer',
           zIndex: 101,
-          backgroundColor: 'transparent',
+          // backgroundColor: 'transparent',
+          backgroundColor: 'rgba(255, 0, 0, 0.2)',
         }}
       />
 
@@ -23,13 +25,15 @@ const ClickZones = ({ onPrev, onNext, onSettingsToggle }) => {
         onClick={onPrev}
         style={{
           position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '10vw',
-          height: '100vh',
+          ottom: isPortrait ? 0 : 'auto',
+          top: isPortrait ? 'auto' : 0,
+          left: isPortrait ? 0 : 0,
+          width: isPortrait ? '100vw' : '10vw',
+          height: isPortrait ? '10vh' : '100vh',
           cursor: 'pointer',
           zIndex: 100,
-          backgroundColor: 'transparent',
+          // backgroundColor: 'transparent',
+          backgroundColor: 'rgba(0, 255, 0, 0.2)',
         }}
       />
 
@@ -38,13 +42,15 @@ const ClickZones = ({ onPrev, onNext, onSettingsToggle }) => {
         onClick={onNext}
         style={{
           position: 'fixed',
-          top: 0,
-          right: 0,
-          width: '10vw',
-          height: '100vh',
+          top: isPortrait ? 0 : 0,
+          bottom: isPortrait ? 'auto' : 'auto',
+          right: isPortrait ? 0 : 0,
+          width: isPortrait ? '100vw' : '10vw',
+          height: isPortrait ? '10vh' : '100vh',
           cursor: 'pointer',
           zIndex: 100,
-          backgroundColor: 'transparent',
+          // backgroundColor: 'transparent',
+          backgroundColor: 'rgba(0, 0, 255, 0.2)',
         }}
       />
     </>

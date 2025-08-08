@@ -79,6 +79,7 @@ function App() {
         onPrev={handlePrev}
         onNext={handleNext}
         onSettingsToggle={toggleSettings}
+        orientation={orientation}
       />
 
       <div
