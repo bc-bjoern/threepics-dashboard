@@ -13,20 +13,6 @@ Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
 
 Package: threepics-dashboard
-Version: 1.0.46~dev-202508081733-8defb54
-Architecture: all
-Maintainer: Björn Becker <bjoern.becker@mailbox.org>
-Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji, plymouth, plymouth-themes, ntfs-3g
-Filename: pool/threepics-dashboard/threepics-dashboard_1.0.46~dev-202508081733-8defb54.deb
-Size: 335160
-MD5sum: 13c6969b7bdc1c389ed1fd941600d7ed
-SHA1: fbfee648a7d526402b4715cd0186d06971ca1eac
-SHA256: 8b4e4ac27b1491f5e6d9e994c754b961dc09cd92c19fd84caa17f72ef2ff8746
-Section: base
-Priority: optional
-Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
-
-Package: threepics-dashboard
 Version: 1.0.47~dev-202508081736-4e2205c
 Architecture: all
 Maintainer: Björn Becker <bjoern.becker@mailbox.org>
@@ -50,6 +36,20 @@ Size: 335148
 MD5sum: 5b5204d80f514b4c28ffb07a24d0132e
 SHA1: bda29fdbb755ccc7e72cbd053a073add268d58a2
 SHA256: 1f81b048d20cef5b714ff2af54f912227b366c30ef0d977f1e6049313a6a70ff
+Section: base
+Priority: optional
+Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
+
+Package: threepics-dashboard
+Version: 1.0.49~dev-202508081738-f6d4fca
+Architecture: all
+Maintainer: Björn Becker <bjoern.becker@mailbox.org>
+Depends: nodejs, npm, chromium-browser, openbox, git, cron, xinit, x11-xserver-utils, libx11-6, libxext6, vim, python3, python3-pip, python3-venv, unclutter, fonts-noto-color-emoji, plymouth, plymouth-themes, ntfs-3g
+Filename: pool/threepics-dashboard/threepics-dashboard_1.0.49~dev-202508081738-f6d4fca.deb
+Size: 335158
+MD5sum: 9fc4fe0f4f9f04975c484b93a14019b2
+SHA1: 1ea4e773364f20479b771ee0a736a209efdd204a
+SHA256: 9b34a64bbac30dd0e73013ac3dd6b96c56f6b1f5ff2f902f2cee4f666e3b2fde
 Section: base
 Priority: optional
 Description: Dashboard für den Threepics-Raspberry Pi mit Kiosk-Modus und Systemdiensten.
