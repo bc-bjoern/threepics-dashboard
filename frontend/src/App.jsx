@@ -63,6 +63,17 @@ function App() {
   return (
     <>
       <LanguageLoader />
+      <div
+        className="app-wrapper"
+        style={{
+          transform: orientation === 'portrait' ? 'rotate(90deg)' : 'none',
+          transformOrigin: 'center center',
+          width: '100vw',
+          height: '100vh',
+          overflow: 'hidden',
+          position: 'relative',
+        }}
+      >
       {/* Click Zones ganz oben */}
       <ClickZones
         onPrev={handlePrev}
@@ -72,7 +83,6 @@ function App() {
 
       <div
         style={{
-          transform: orientation === 'portrait' ? 'rotate(90deg)' : 'none',
           width: 'calc(100vw - 5vw)',
           display: 'flex',
           flexDirection: 'column',
@@ -118,6 +128,7 @@ function App() {
           settingsMenu={settingsMenu}
           setSettingsMenu={setSettingsMenu}
         />
+      </div>
       </div>
     </>
   );
