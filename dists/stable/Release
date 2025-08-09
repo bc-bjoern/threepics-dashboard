@@ -1,24 +1,24 @@
 Architectures: armhf
 Codename: stable
 Components: main
-Date: Sun, 03 Aug 2025 19:42:15 +0000
+Date: Sat, 09 Aug 2025 14:46:05 +0000
 Description: Threepics Raspberry Pi Repo
 Label: Threepics Repository
 Origin: Threepics
 Suite: stable
 MD5Sum:
- 74c30958c1d8f8ccaac878a13aa7eef5              194 Release
- 06590e2668b0e3f08a7eaa9b6d5dd06a              661 main/binary-armhf/Packages
- 23aad88f083ba0ac5f7381705a91c8ab              478 main/binary-armhf/Packages.gz
+ 38157ff17b626c5c10afb8d0e19b7cb8              194 Release
+ 8155bb45dbcf068655c90f3bdd7f8ce0             2980 main/binary-armhf/Packages
+ 5624fa2aa30c32280cb5de96ba0a137a              886 main/binary-armhf/Packages.gz
 SHA1:
- 88fd21ad97448f2c307f369cc55ed79287653291              194 Release
- ea99d1062ae0286c3d1357e9aec6e77e05b650b6              661 main/binary-armhf/Packages
- 2db804339767c853533d5277a18a3f57481fbeb1              478 main/binary-armhf/Packages.gz
+ 1bc922668124dba59dd83e6e4f425f102bd0f580              194 Release
+ b14ef491041111969854d0436f0d9e54445a8a67             2980 main/binary-armhf/Packages
+ 581f24690ee8494b4e5131b27a0bde7ef11ad0b9              886 main/binary-armhf/Packages.gz
 SHA256:
- d762894bd9a1700c888248129fa594883f77f0878af7c60b5c5a282c10dbf110              194 Release
- c6a4740db7a528e5ba5d8ef5c737c257dbb825b4a0e4450a460f088ae67c1d83              661 main/binary-armhf/Packages
- 451e79f0eb3d289f42be9e38db80b8c7118f6d67e66966588ebe3be1e04fff51              478 main/binary-armhf/Packages.gz
+ 54acb9888c49db5dcf38a238b57d11e09baa304e2b016409a197691ef79cb7c6              194 Release
+ cdf4941bd6fbf7cb2581d541118873886e834a707bf71fa7b8bf10ecf67f4e3f             2980 main/binary-armhf/Packages
+ 78e6587ede934906cab04b0e6f79ddf77b1dca66ad305a5c40fa4dbfa305d66c              886 main/binary-armhf/Packages.gz
 SHA512:
- 0b184f58d2707dd63a1b47af612ff83faa38fa063a4d158bc96859d66cc0ed44b9f95c69ee9efcd5cdb69de78da27cff9a4b4f333746ab6f2ad89fa759a0a380              194 Release
- 601c1f4c989fdc5fd4ed6a2a625ed4641b8a8a0a94e64a63430517e808acb7d396e343edbb52eb8137c077db1e24278986ec4ed81ea5f7602aa9464610b6c245              661 main/binary-armhf/Packages
- 536fe0d8afe49dbc36046004893e8e007f4d2a067331634cb3298a04fc15d532250ab7bf0edc5505c83d4a91670ec60ecc22e221b7f5f12601e9bba7ede04206              478 main/binary-armhf/Packages.gz
+ ea6c4bb0fd81bef06281514192244f9775944684dd187c0f3c6df7364cefd616bf433b3b4e8385604fbd35e38110bee4090aeecbb40df3fc7593078e85573dc8              194 Release
+ 6336f6b4dbdbf8ef307ff724f22a0e502e8b9ddbe20f023990b6ff6876885a913d1fb2d0ad9ef7c6cc6259be6e69c3d07d3d843181930ce0115ea3d8c8aca19f             2980 main/binary-armhf/Packages
+ 3a1c616a400bf565f5d1f5ca1807c25c91a03494ce27afbdd4ed3e213ec73f7c1dfb007de6e16977e9b093d2bc0cf1d85da6ce504940d713e43a22e72594c5e2              886 main/binary-armhf/Packages.gz
