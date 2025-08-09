@@ -6,6 +6,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const configDir = path.join(__dirname, 'config');
+
+if (!fs.existsSync(configDir)) {
+  fs.mkdirSync(configDir, { recursive: true });
+}
 const credentialsPath = path.join(configDir, 'credentials.json');
 // ensure credentials.json
 if (!fs.existsSync(credentialsPath)) {
