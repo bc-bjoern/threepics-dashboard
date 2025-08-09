@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Threepics
+Description=Logo in der Mitte + vier rotierende Punkte
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/threepics
+ScriptFile=/usr/share/plymouth/themes/threepics/threepics.script

@@ -1,0 +1,10 @@
+# /etc/systemd/system/threepics-update.timer
+[Unit]
+Description=Run threepics auto-update once after boot
+
+[Timer]
+OnBootSec=2min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

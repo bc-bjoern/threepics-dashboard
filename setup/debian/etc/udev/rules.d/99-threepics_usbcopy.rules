@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="block", KERNEL=="sd[a-z][0-9]", ENV{ID_FS_TYPE}!="", RUN+="/bin/systemd-run --unit=threepics-usbcopy-%k /usr/bin/python3 /usr/local/bin/threepics_usbcopy.py %k"

@@ -19,7 +19,6 @@ import useCursorControl from './hooks/useCursorControl';
 
 function App() {
   useCursorControl();
-  const { t } = useTranslation();
 
   const [settingsMenu, setSettingsMenu] = useState('anmeldung');
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -33,7 +32,7 @@ function App() {
   useEffect(() => {
     axios.get(`${backendUrl}/api/setup`)
       .then((response) => {
-        if (response.data?.orientation) {
+        if (['portrait', 'landscape'].includes(response.data?.orientation)) {
           setOrientation(response.data.orientation);
         }
       })
@@ -63,16 +62,14 @@ function App() {
   return (
     <>
       <LanguageLoader />
-      {/* Click Zones ganz oben */}
       <ClickZones
         onPrev={handlePrev}
         onNext={handleNext}
         onSettingsToggle={toggleSettings}
+        orientation={orientation}
       />
-
       <div
         style={{
-          transform: orientation === 'portrait' ? 'rotate(90deg)' : 'none',
           width: 'calc(100vw - 5vw)',
           display: 'flex',
           flexDirection: 'column',
@@ -97,6 +94,7 @@ function App() {
               currentIndex={currentIndex}
               transitionEffect={transitionEffect}
               transitionDuration={transitionDuration}
+              orientation={orientation} 
               onMediaEnd={() => {
                 // Nur bei Video-Ende ausgeführt
                 if (currentMedia?.type === 'video') {
@@ -105,7 +103,7 @@ function App() {
               }}
             />
             {currentMedia.subtitle && (
-            <MediaFooter subtitle={currentMedia.subtitle} type={currentMedia.type} />
+            <MediaFooter subtitle={currentMedia.subtitle} type={currentMedia.type} orientation={orientation} />
             )}
           </>
         )}
@@ -119,8 +117,8 @@ function App() {
           setSettingsMenu={setSettingsMenu}
         />
       </div>
-    </>
-  );
+  </>
+);
 }
 
 export default App;
