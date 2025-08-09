@@ -11,8 +11,17 @@ BACKEND_DIR="/opt/threepics/threepics-dashboard/backend"
 BASHRC="/home/threepics/.bashrc"
 BASH_PROFILE="/home/threepics/.bash_profile"
 XINITRC="/home/threepics/.xinitrc"
-CONFIG_FILE="/etc/default/threepics-dashboard"
 VIMRC="/home/threepics/.vimrc"
+
+if [ ! -d "$FRONTEND_DIR" ]; then
+  echo "❌ $FRONTEND_DIR fehlt – Entpacken schlug fehl oder wurde vorher gelöscht."
+  exit 1
+fi
+
+if [ -d /opt/threepics/threepics-dashboard ]; then
+  echo "🛠 Fixing ownership of /opt/threepics/threepics-dashboard"
+  chown -R threepics:threepics /opt/threepics/threepics-dashboard
+fi
 
 # 1. Fix permissions for critical system files
 if [ -f /etc/sudoers.d/threepics ]; then
@@ -59,32 +68,22 @@ chown threepics:threepics "$XINITRC"
 echo "✅ .xinitrc created"
 
 # 5. Create /opt/threepics and assign ownership
-mkdir -p /opt/threepics
-chown threepics:threepics /opt/threepics
 chown threepics:threepics "$XINITRC"
 
-# 6. Load Git URL from config or use default
-if [ -f "$CONFIG_FILE" ]; then
-  source "$CONFIG_FILE"
-fi
 
-# 8. Create frontend .env file
-if [ ! -d "$FRONTEND_DIR" ]; then
-  echo "⚠️  Creating missing frontend directory: $FRONTEND_DIR"
-  mkdir -p "$FRONTEND_DIR"
-  chown threepics:threepics "$FRONTEND_DIR"
-fi
-# Log-Inhalt prüfen
-ls -la "$FRONTEND_DIR" || echo "⚠️ frontend directory was not present during postinst"
-
-cat > "$FRONTEND_DIR/.env" <<EOF
+# Nur schreiben, wenn frontend vorhanden
+if [ -d "$FRONTEND_DIR" ]; then
+  cat > "$FRONTEND_DIR/.env" <<EOF
 VITE_BACKEND_URL=http://localhost:3000
 VITE_WS_URL=ws://localhost:8081
 EOF
-
-chown threepics:threepics "$FRONTEND_DIR/.env"
-chmod 644 "$FRONTEND_DIR/.env"
-echo "✅ .env written to frontend"
+  chown threepics:threepics "$FRONTEND_DIR/.env"
+  chmod 644 "$FRONTEND_DIR/.env"
+  echo "✅ .env written to frontend"
+else
+  echo "❌ $FRONTEND_DIR fehlt – kann .env nicht schreiben"
+  exit 1
+fi
 
 # 9. Verify required tools
 for bin in python3 pip3; do
@@ -95,6 +94,30 @@ done
 touch "$BASHRC"
 chown threepics:threepics "$BASHRC"
 chmod 644 "$BASHRC"
+
+CONFIG_DIR="/opt/threepics/threepics-dashboard/backend/config"
+SETUP_FILE="$CONFIG_DIR/setup.json"
+
+mkdir -p "$CONFIG_DIR"
+chown threepics:threepics "$CONFIG_DIR"
+
+if [ ! -f "$SETUP_FILE" ]; then
+    cat > "$SETUP_FILE" <<EOF
+{
+  "delay_seconds": 20,
+  "language": "en",
+  "sync_interval": 120,
+  "transition_effect": "none",
+  "transition_duration": "1.0",
+  "orientation": "landscape",
+  "auto_update_enabled": false
+}
+EOF
+    chown threepics:threepics "$SETUP_FILE"
+    echo "✅ setup.json mit Defaults erstellt"
+else
+    echo "✅ setup.json existiert bereits – wird nicht überschrieben"
+fi
 
 # 12b. Install serve globally for threepics user
 echo "📦 Installing serve globally for user 'threepics'..."
@@ -115,6 +138,11 @@ echo "✅ serve installed globally"
 
 # 12. Setup Python backend
 if [ -d "$BACKEND_DIR" ]; then
+  if [ ! -d "$BACKEND_DIR/uploads" ];
+  then
+    mkdir "$BACKEND_DIR/uploads"
+  fi 
+
   echo "🐍 Setting up Python venv..."
   cd "$BACKEND_DIR"
   if [ -f "$BACKEND_DIR/package.json" ]; then
@@ -136,8 +164,10 @@ fi
 systemctl enable threepics-backend.service
 systemctl enable threepics-frontend.service
 systemctl enable getty@tty1.service
+systemctl enable threepics-update.timer
 systemctl daemon-reexec
 systemctl daemon-reload
+systemctl start threepics-update.timer
 
 # 14. Create user-friendly .vimrc
 if [ ! -f "$VIMRC" ]; then
@@ -168,7 +198,7 @@ EOF
 chown threepics:threepics "$BASH_PROFILE"
 echo "✅ .bash_profile created"
 
-# 16. Add useful aliases to .bashrc
+# 16. Add useful aliase to .bashrc
 grep -q "alias restart-backend=" "$BASHRC" || cat << 'EOF' >> "$BASHRC"
 
 # === Useful Aliases ===
@@ -195,16 +225,58 @@ echo "📆 Configuring cronjobs..."
 CRONTAB_TMP=$(mktemp)
 crontab -u threepics -l 2>/dev/null > "$CRONTAB_TMP" || true
 
-# Nur hinzufügen, wenn update.sh noch nicht eingetragen ist
-if ! grep -q 'update.sh' "$CRONTAB_TMP"; then
-  echo "0 3 * * 0 /opt/threepics/threepics-dashboard/setup/update.sh 2>&1" >> "$CRONTAB_TMP"
-  crontab -u threepics "$CRONTAB_TMP"
-  echo "✅ Cronjob for update.sh added"
-else
-  echo "🔁 Cronjob for update.sh already exists – skipping"
+# Nur hinzufügen, wenn update.py noch nicht eingetragen ist
+chown root:threepics /usr/local/bin/threepics_update.py
+chown root:threepics /usr/local/bin/threepics_usbcopy.py
+chmod u+x /usr/local/bin/threepics_update.py
+chmod u+x /usr/local/bin/threepics_usbcopy.py
+
+# disable splash 
+CONFIG_FILE="/boot/firmware/config.txt"
+SETTING="disable_splash=1"
+
+# Prüfen, ob die Datei existiert
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Hinweis: Datei $CONFIG_FILE nicht vorhanden – Eintrag '$SETTING' wird übersprungen."
+    return 0 2>/dev/null || exit 0
 fi
 
-rm -f "$CRONTAB_TMP"
+# Prüfen, ob der Eintrag bereits korrekt vorhanden ist
+if grep -q "^${SETTING}$" "$CONFIG_FILE"; then
+    echo "Eintrag bereits vorhanden: $SETTING"
+else
+    # Vorhandenen Eintrag ersetzen oder neu einfügen
+    if grep -q "^disable_splash=" "$CONFIG_FILE"; then
+        sed -i "s/^disable_splash=.*/$SETTING/" "$CONFIG_FILE"
+        echo "Eintrag aktualisiert: $SETTING"
+    else
+        echo "$SETTING" >> "$CONFIG_FILE"
+        echo "Eintrag hinzugefügt: $SETTING"
+    fi
+fi
+
+# plymouth > cmdline splash quiet plymouth.ignore-serial-consoles
+PLYMOUTH_CONF="/etc/plymouth/plymouthd.conf"
+DESIRED_THEME="threepics"
+
+if [ -f "$PLYMOUTH_CONF" ]; then
+  CURRENT_THEME=$(grep '^Theme=' "$PLYMOUTH_CONF" | cut -d'=' -f2)
+else
+  CURRENT_THEME=""
+fi
+
+if [ "$CURRENT_THEME" != "$DESIRED_THEME" ]; then
+  echo "🖼️ Aktiviere Plymouth-Theme '$DESIRED_THEME'..."
+  plymouth-set-default-theme -R "$DESIRED_THEME"
+  echo "✅ Plymouth-Theme gesetzt auf $DESIRED_THEME"
+else
+  echo "✅ Plymouth-Theme '$DESIRED_THEME' ist bereits aktiv"
+fi
+
+udevadm control --reload-rules
+
+systemctl start threepics-backend.service
+systemctl start threepics-frontend.service
 
 echo "🎉 postinst script completed successfully at $(date)"
 exit 0

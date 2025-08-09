@@ -1,9 +1,0 @@
-{
-  "delay_seconds": 20,
-  "language": "en",
-  "sync_interval": 120,
-  "transition_effect": "none",
-  "transition_duration": "1.0"
-  "transition_duration": "1.0",
-  "orientation": "portrait"
-}
