@@ -66,7 +66,7 @@ const variants = {
 
 const allTransitions = Object.keys(variants);
 
-function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', transitionDuration = 0.8, onMediaEnd}) {
+function MediaDisplay({ currentMedia, currentIndex, transitionEffect = 'fade', transitionDuration = 0.8, onMediaEnd, orientation}) {
   const videoRef = useRef(null);
   useEffect(() => {
     const video = videoRef.current;
@@ -116,6 +116,8 @@ if (!currentMedia) return null;
           src={`${backendUrl}${currentMedia.url}`}
           alt={`Media ${currentIndex}`}
           style={{
+            transform: orientation === 'portrait' ? 'rotate(90deg)' : 'none',
+            transformOrigin: 'center',
             maxWidth: '100%',
             maxHeight: '100%',
             objectFit: 'contain',
@@ -132,6 +134,8 @@ if (!currentMedia) return null;
           autoPlay
           muted
           style={{
+            transform: orientation === 'portrait' ? 'rotate(90deg)' : 'none',
+            transformOrigin: 'center',
             maxWidth: '100%',
             maxHeight: '100%',
             objectFit: 'contain',
