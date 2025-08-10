@@ -1,0 +1,43 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Architectures: armhf
+Codename: stable
+Components: main
+Date: Sun, 10 Aug 2025 21:11:13 +0000
+Description: Threepics Raspberry Pi Repo
+Label: Threepics Repository
+Origin: Threepics
+Suite: stable
+MD5Sum:
+ df3449676933ef2adcb3125487875825              194 Release
+ ce07654696df18da9fd6f9d14f9b4297             3738 main/binary-armhf/Packages
+ f3cc3b80ecd668f11a6089283693fba7             1003 main/binary-armhf/Packages.gz
+SHA1:
+ 03898a472f213f055be5e662448a44f66692fbfa              194 Release
+ 69f2066d98e3e4e6a5b69e37d8812220e4756e05             3738 main/binary-armhf/Packages
+ 2998115c46119eddc33a2a9c0cd254d4a459f640             1003 main/binary-armhf/Packages.gz
+SHA256:
+ 6de0e060bab8ff0a2c9d54de9456cd7fc2e0b872477d76f6f75c01920bcf7248              194 Release
+ e081c8a8985c92613363c9a0993fdba619e6b7299fec8f1e878f44676ae7ac7c             3738 main/binary-armhf/Packages
+ 8ea05ba340cd6178ffeadff079817869127ffd2046ee561ceae827c845f7b6e0             1003 main/binary-armhf/Packages.gz
+SHA512:
+ 9f9808e1f41942821c975deb150e6a99048c6ebc60198ec851013dd6bf17f52428e0cca53eba535cbe51d7fd5d77fb0bce014e9b6463dd2531887f9ffb7ee3b8              194 Release
+ d77cbcba7b562d86ecb293c079e602c6773bf5d39452926a7ea3a1d88a81bc5ebbfbd5e5ae87d2046492a459c4013194569fc3ce4f5a9ff9b21b450ea6bec952             3738 main/binary-armhf/Packages
+ bfd853e2b3d7936eee4378b6561f78c9b83da19c199b11c3adb5aefc486460b3279c7f37a36e68d608b2f7313e8493e55a1c55df57c79c86d7b45457ee1ac193             1003 main/binary-armhf/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEdnWlg8IbMGAnb/QxyhL/YnJvkIwFAmiZDCMACgkQyhL/YnJv
+kIxesA//Vl2GRVoI7qM7E5J9Mi9CKiT2Pchc0j/8u+k2M5vx7f/bII1Erv2Msofg
+zJi8BX6lGJwMFJdP7AXr9WeXHMtTL1oRLMgYQn+0ssKh6EhQmi1U1lyzRCK6u5e3
+d8bR54DE+ks0DBOAwk4Bk7pyIHg/hzeYV3rwF8QhYEOjvIihq3bFquAxTNUM48Za
+hu2BVTPm26XZziMgv0WbnsXoDzIkCGttxo0EySv/NHEo9Mn92+fnjs7DZRB1Vq0Z
+3krSYTl5Khas8PoNdGyf2DQGsYFHwgawqmjExH8tsZbGrVIfH4dqs+a4vdAuPfSL
+X03WqdmkdcHj6bxLZfQ3RKABFqwB43gtZo3yr7Hr2A3EECXXGRtoOorRqT0OYfR6
+v1f7CkfR5qr6zQbjOdSuW6jJ0fTjQ9sFCovMFqhGQqh5WqRQb5AzV8oOrprCd+Lu
++AIZQhSs5eD/22it/h9iCoBdscmjOvs4iAc0VuOdLG25PTfvwQnpSAFZQQ//XA0y
+Hj5iMG1MuwwX8e3DWJigMQ+FLaxVFOgFRdNyPNZhVlTB3uthEtLgkIp/FS+K8Je3
+fGCRZQl9Ldh0Ivo87BixNmt2eJEWIo49L56IXOuKrU4EPMy/E6a7YtsftX/uLi2Z
+bLPPqHp77UxQbnVN4s0My9S4Ow/b49wBGjJ9f/e5Vyz5Sp1sOD4=
+=mvG8
+-----END PGP SIGNATURE-----
