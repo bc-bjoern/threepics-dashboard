@@ -1,4 +1,5 @@
 #!/bin/bash
+#
 
 ENV_FILE="frontend/.env"
 
